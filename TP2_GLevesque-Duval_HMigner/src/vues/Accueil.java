@@ -3,6 +3,9 @@ package vues;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
@@ -11,6 +14,8 @@ public class Accueil extends JFrame{
 	private static final long serialVersionUID = 1L;
 	private JTextField nomUtilisateur;
 	private JTextField mdp;
+	private JButton valider;
+	private JButton quitter;
 
 	public Accueil() {
 		super("Connexion");
@@ -43,14 +48,16 @@ public class Accueil extends JFrame{
 		mdp.setBounds(125, 126, 145, 20);
 		getContentPane().add(mdp);
 		
-		JButton valider = new JButton("Valider");
+		valider = new JButton("Valider");
 		valider.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		valider.setBounds(20, 188, 90, 25);
 		getContentPane().add(valider);
 		
-		JButton quitter = new JButton("Quitter");
+		quitter = new JButton("Quitter");
 		quitter.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		quitter.setBounds(125, 188, 90, 25);
 		getContentPane().add(quitter);
 	}
+	
+	
 }
