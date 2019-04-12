@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.GridLayout;
+import javax.swing.SwingConstants;
 
 public class ChoixTraitements extends JFrame{
 
@@ -17,9 +18,14 @@ public class ChoixTraitements extends JFrame{
 
 	public ChoixTraitements() {
 		super("Menu");
+		BorderLayout borderLayout = (BorderLayout) getContentPane().getLayout();
+		borderLayout.setVgap(10);
 		setSize( 400, 200 );
+		setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+		setLocationRelativeTo( null );
 		
 		JLabel lblMenuDeLapplication = new JLabel("Menu de l'application");
+		lblMenuDeLapplication.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMenuDeLapplication.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		getContentPane().add(lblMenuDeLapplication, BorderLayout.NORTH);
 		
