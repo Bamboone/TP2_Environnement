@@ -10,10 +10,16 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JTable;
+import javax.swing.UIManager;
+import javax.swing.JCheckBox;
+import java.awt.Dimension;
+import javax.swing.JList;
 
-public class Artistes extends JFrame implements ActionListener{
+public class Artistes extends JFrame {
 	private JTextField fieldRecherche;
 	private JTable tableArtistes;
+	private JTextField fieldNumero;
+	private JTextField fieldNom;
 	
 	public Artistes() {
 		super("Gestion des artistes");
@@ -57,23 +63,85 @@ public class Artistes extends JFrame implements ActionListener{
 		panneauArtistes.add(tableArtistes);
 		
 		JLabel lblArtistes = new JLabel("Artistes");
-		lblArtistes.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
-		lblArtistes.setBounds(42, 11, 76, 40);
+		lblArtistes.setFont(new Font("Comic Sans MS", Font.BOLD, 26));
+		lblArtistes.setBounds(24, 5, 112, 52);
 		panneauArtistes.add(lblArtistes);
 		
-		JPanel panneauImage = new JPanel();
-		panneauImage.setBounds(10, 56, 135, 119);
-		panneauArtistes.add(panneauImage);
+		JPanel panneauImageArtiste = new JPanel();
+		panneauImageArtiste.setBounds(10, 56, 135, 119);
+		panneauArtistes.add(panneauImageArtiste);
 		
 		JButton btnRemplacer = new JButton("Remplacer");
 		btnRemplacer.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
-		btnRemplacer.setBounds(10, 186, 135, 45);
+		btnRemplacer.setBounds(10, 197, 135, 45);
 		panneauArtistes.add(btnRemplacer);
-	}
-
-	@Override
-	public void actionPerformed( ActionEvent arg0 ) {
-		// TODO Auto-generated method stub
 		
+		JButton btnNouveau = new JButton("Nouveau");
+		btnNouveau.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+		btnNouveau.setBounds(592, 12, 135, 40);
+		panneauArtistes.add(btnNouveau);
+		
+		JButton btnAjouter = new JButton("Ajouter");
+		btnAjouter.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+		btnAjouter.setBounds(592, 73, 135, 40);
+		panneauArtistes.add(btnAjouter);
+		
+		JButton btnModifier = new JButton("Modifier");
+		btnModifier.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+		btnModifier.setBounds(592, 135, 135, 40);
+		panneauArtistes.add(btnModifier);
+		
+		JButton btnSupprimer = new JButton("Supprimer");
+		btnSupprimer.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+		btnSupprimer.setBounds(592, 199, 135, 40);
+		panneauArtistes.add(btnSupprimer);
+		
+		JPanel panneauInfos = new JPanel();
+		panneauInfos.setBounds(10, 359, 764, 201);
+		getContentPane().add(panneauInfos);
+		panneauInfos.setLayout(null);
+		
+		JLabel lblInfos = new JLabel("Informations");
+		lblInfos.setFont(new Font("Comic Sans MS", Font.BOLD, 26));
+		lblInfos.setBounds(12, 2, 162, 52);
+		panneauInfos.add(lblInfos);
+		
+		JLabel lblNumero = new JLabel("Num\u00E9ro");
+		lblNumero.setBounds(12, 65, 57, 31);
+		panneauInfos.add(lblNumero);
+		lblNumero.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+		
+		JLabel lblNom = new JLabel("Nom");
+		lblNom.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+		lblNom.setBounds(12, 99, 57, 31);
+		panneauInfos.add(lblNom);
+		
+		JLabel lblMembre = new JLabel("Membre");
+		lblMembre.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+		lblMembre.setBounds(12, 136, 57, 31);
+		panneauInfos.add(lblMembre);
+		
+		fieldNumero = new JTextField();
+		fieldNumero.setBounds(75, 72, 237, 20);
+		panneauInfos.add(fieldNumero);
+		fieldNumero.setColumns(10);
+		
+		fieldNom = new JTextField();
+		fieldNom.setColumns(10);
+		fieldNom.setBounds(74, 106, 237, 20);
+		panneauInfos.add(fieldNom);
+		
+		JCheckBox checkBoxMembre = new JCheckBox("");
+		checkBoxMembre.setSize(new Dimension(200, 200));
+		checkBoxMembre.setBounds(75, 142, 21, 23);
+		panneauInfos.add(checkBoxMembre);
+		
+		JList listeAlbums = new JList();
+		listeAlbums.setBounds(334, 27, 208, 153);
+		panneauInfos.add(listeAlbums);
+		
+		JPanel panneauImageAlbum = new JPanel();
+		panneauImageAlbum.setBounds(591, 37, 135, 119);
+		panneauInfos.add(panneauImageAlbum);
 	}
 }

@@ -9,11 +9,13 @@ import javax.swing.JButton;
 import java.awt.GridLayout;
 import javax.swing.SwingConstants;
 
+import controleur.ChoixListener;
+
 public class ChoixTraitements extends JFrame{
 
 	private static final long serialVersionUID = 1L;
 	private JButton gestionArtistes;
-	private JButton albums;
+	private JButton gestionAlbums;
 	private JButton quitter;
 
 	public ChoixTraitements() {
@@ -36,11 +38,16 @@ public class ChoixTraitements extends JFrame{
 		gestionArtistes = new JButton("Gestion des Artistes");
 		panel.add(gestionArtistes);
 		
-		albums = new JButton("Gestion des Albums");
-		panel.add(albums);
+		gestionAlbums = new JButton("Gestion des Albums");
+		panel.add(gestionAlbums);
 		
 		quitter = new JButton("Quitter");
 		panel.add(quitter);
+		
+		ChoixListener gestionnaire = new ChoixListener(gestionArtistes, gestionAlbums, quitter, this);
+		gestionArtistes.addActionListener( gestionnaire );
+		gestionAlbums.addActionListener( gestionnaire );
+		quitter.addActionListener( gestionnaire );
 		
 	}
 	
