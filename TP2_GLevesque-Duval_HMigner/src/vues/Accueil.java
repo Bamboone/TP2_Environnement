@@ -1,19 +1,17 @@
 package vues;
 
 import javax.swing.JFrame;
+import controleur.*;
 
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
-public class Accueil extends JFrame implements ActionListener {
+public class Accueil extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField nomUtilisateur;
@@ -64,26 +62,12 @@ public class Accueil extends JFrame implements ActionListener {
 		quitter.setBounds( 125, 188, 90, 25 );
 		getContentPane().add( quitter );
 
-		valider.addActionListener( this );
-		quitter.addActionListener( this );
+		AccueilListener listener = new AccueilListener( valider, quitter, nomUtilisateur, mdp, this );
+		valider.addActionListener( listener );
+		quitter.addActionListener( listener );
 	}
 
-	@Override
-	public void actionPerformed( ActionEvent e ) {
-		if ( e.getSource() == valider ) {
-			if ( nomUtilisateur.getText().equals( "administrateur" )
-					&& String.valueOf( mdp.getPassword() ).equals( "12345" ) ) {
-				ChoixTraitements fenChoix = new ChoixTraitements();
-				this.dispose();
-				fenChoix.setVisible( true );
-			} else {
-				JOptionPane.showMessageDialog( null, "Erreur les informations de connexion sont érronées",
-						"Message d'erreur", JOptionPane.ERROR_MESSAGE );
-			}
-		} else if ( e.getSource() == quitter ) {
-			System.exit( 0 );
-		}
 
-	}
+	
 
 }
