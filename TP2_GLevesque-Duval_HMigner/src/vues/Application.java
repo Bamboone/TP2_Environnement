@@ -3,9 +3,8 @@ package vues;
 public class Application {
 
 	public static void main( String[] args ) {
-		Accueil accueil = new Accueil();
+		VueAccueil accueil = new VueAccueil();
 		accueil.setVisible( true );
-
 	}
 
 }

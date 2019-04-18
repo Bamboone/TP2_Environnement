@@ -6,8 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-import vues.Albums;
-import vues.Artistes;
+import vues.*;
 
 public class ChoixListener implements ActionListener {
 	
@@ -26,16 +25,15 @@ public class ChoixListener implements ActionListener {
 	@Override
 	public void actionPerformed( ActionEvent e ) {
 		if(e.getSource() == btnArtistes) {
-			Artistes fen = new Artistes();
+			VueArtistes fen = new VueArtistes();
 			fenetre.dispose();
 			fen.setVisible( true );
 		}else if(e.getSource() == btnAlbums) {
-			Albums fen = new Albums();
+			VueAlbums fen = new VueAlbums();
 			fenetre.dispose();
 			fen.setVisible( true );
 		}else if(e.getSource() == btnQuitter) {
 			System.exit( 0 );
 		}
 	}
-
 }

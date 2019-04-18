@@ -11,14 +11,14 @@ import javax.swing.SwingConstants;
 
 import controleur.ChoixListener;
 
-public class ChoixTraitements extends JFrame{
+public class VueChoixTraitements extends JFrame{
 
 	private static final long serialVersionUID = 1L;
 	private JButton gestionArtistes;
 	private JButton gestionAlbums;
 	private JButton quitter;
 
-	public ChoixTraitements() {
+	public VueChoixTraitements() {
 		super("Menu");
 		BorderLayout borderLayout = (BorderLayout) getContentPane().getLayout();
 		borderLayout.setVgap(10);

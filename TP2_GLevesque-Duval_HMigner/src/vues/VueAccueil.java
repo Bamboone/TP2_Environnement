@@ -11,7 +11,7 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
-public class Accueil extends JFrame {
+public class VueAccueil extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField nomUtilisateur;
@@ -19,7 +19,7 @@ public class Accueil extends JFrame {
 	private JButton valider;
 	private JButton quitter;
 
-	public Accueil() {
+	public VueAccueil() {
 		super( "Connexion" );
 		setSize( 400, 300 );
 		setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );

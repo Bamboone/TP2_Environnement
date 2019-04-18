@@ -5,23 +5,29 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.UIManager;
+
+import gestionDonnees.GestionArtistes;
+import gestionDonnees.ModeleArtistes;
+
 import javax.swing.JCheckBox;
 import java.awt.Dimension;
 import javax.swing.JList;
 
-public class Artistes extends JFrame {
+public class VueArtistes extends JFrame {
 	private JTextField fieldRecherche;
 	private JTable tableArtistes;
 	private JTextField fieldNumero;
 	private JTextField fieldNom;
 	
-	public Artistes() {
+	public VueArtistes() {
 		super("Gestion des artistes");
 		setSize(800, 600);
 		getContentPane().setLayout(null);
@@ -58,9 +64,13 @@ public class Artistes extends JFrame {
 		getContentPane().add(panneauArtistes);
 		panneauArtistes.setLayout(null);
 		
-		tableArtistes = new JTable();
-		tableArtistes.setBounds(155, 11, 388, 237);
-		panneauArtistes.add(tableArtistes);
+		GestionArtistes gestionnaire = new GestionArtistes();
+		ModeleArtistes modele = new ModeleArtistes(gestionnaire.getListeArtistes());
+		tableArtistes = new JTable(modele);
+		tableArtistes.setSelectionMode( ListSelectionModel.SINGLE_SELECTION );
+		JScrollPane scroll = new JScrollPane(tableArtistes);
+		scroll.setBounds(155, 11, 388, 237);
+		panneauArtistes.add(scroll);
 		
 		JLabel lblArtistes = new JLabel("Artistes");
 		lblArtistes.setFont(new Font("Comic Sans MS", Font.BOLD, 26));

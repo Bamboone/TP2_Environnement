@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import vues.ChoixTraitements;
+import vues.*;
 
 public class AccueilListener implements ActionListener {
 
@@ -33,7 +33,7 @@ public class AccueilListener implements ActionListener {
 		if ( e.getSource() == valider ) {
 			if ( nomUtilisateur.getText().equals( "administrateur" )
 					&& String.valueOf( mdp.getPassword() ).equals( "12345" ) ) {
-				ChoixTraitements fenChoix = new ChoixTraitements();
+				VueChoixTraitements fenChoix = new VueChoixTraitements();
 				fenetre.dispose();
 				fenChoix.setVisible( true );
 			} else {

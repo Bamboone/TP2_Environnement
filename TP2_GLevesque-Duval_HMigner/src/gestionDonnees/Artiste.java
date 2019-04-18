@@ -33,4 +33,10 @@ public class Artiste {
 	public String getPhoto() {
 		return photo;
 	}
+	
+	@Override
+	public String toString() {
+		return nom;
+		
+	}
 }
