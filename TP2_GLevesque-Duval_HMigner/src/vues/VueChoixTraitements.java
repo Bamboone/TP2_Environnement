@@ -23,12 +23,12 @@ public class VueChoixTraitements extends JFrame{
 		BorderLayout borderLayout = (BorderLayout) getContentPane().getLayout();
 		borderLayout.setVgap(10);
 		setSize( 400, 200 );
-		setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+		setDefaultCloseOperation( JFrame.DO_NOTHING_ON_CLOSE );
 		setLocationRelativeTo( null );
 		
 		JLabel lblMenuDeLapplication = new JLabel("Menu de l'application");
 		lblMenuDeLapplication.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMenuDeLapplication.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblMenuDeLapplication.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
 		getContentPane().add(lblMenuDeLapplication, BorderLayout.NORTH);
 		
 		JPanel panel = new JPanel();
@@ -36,19 +36,22 @@ public class VueChoixTraitements extends JFrame{
 		panel.setLayout(new GridLayout(3, 1, 0, 5));
 		
 		gestionArtistes = new JButton("Gestion des Artistes");
+		gestionArtistes.setFont(new Font("Comic Sans MS", Font.PLAIN, 11));
 		panel.add(gestionArtistes);
 		
 		gestionAlbums = new JButton("Gestion des Albums");
+		gestionAlbums.setFont(new Font("Comic Sans MS", Font.PLAIN, 11));
 		panel.add(gestionAlbums);
 		
 		quitter = new JButton("Quitter");
+		quitter.setFont(new Font("Comic Sans MS", Font.PLAIN, 11));
 		panel.add(quitter);
 		
 		ChoixListener gestionnaire = new ChoixListener(gestionArtistes, gestionAlbums, quitter, this);
 		gestionArtistes.addActionListener( gestionnaire );
 		gestionAlbums.addActionListener( gestionnaire );
 		quitter.addActionListener( gestionnaire );
-		
+		this.addWindowListener(gestionnaire);
 	}
 	
 	

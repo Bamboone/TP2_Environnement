@@ -1,8 +1,5 @@
 package vues;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -12,8 +9,7 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.JButton;
 import javax.swing.JTable;
-import javax.swing.UIManager;
-
+import gestionDonnees.Album;
 import gestionDonnees.GestionArtistes;
 import gestionDonnees.ModeleArtistes;
 
@@ -22,6 +18,8 @@ import java.awt.Dimension;
 import javax.swing.JList;
 
 public class VueArtistes extends JFrame {
+
+	private static final long serialVersionUID = 1L;
 	private JTextField fieldRecherche;
 	private JTable tableArtistes;
 	private JTextField fieldNumero;
@@ -138,7 +136,7 @@ public class VueArtistes extends JFrame {
 		
 		fieldNom = new JTextField();
 		fieldNom.setColumns(10);
-		fieldNom.setBounds(74, 106, 237, 20);
+		fieldNom.setBounds(75, 106, 237, 20);
 		panneauInfos.add(fieldNom);
 		
 		JCheckBox checkBoxMembre = new JCheckBox("");
@@ -146,7 +144,7 @@ public class VueArtistes extends JFrame {
 		checkBoxMembre.setBounds(75, 142, 21, 23);
 		panneauInfos.add(checkBoxMembre);
 		
-		JList listeAlbums = new JList();
+		JList<Album> listeAlbums = new JList<Album>();
 		listeAlbums.setBounds(334, 27, 208, 153);
 		panneauInfos.add(listeAlbums);
 		

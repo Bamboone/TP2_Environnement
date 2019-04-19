@@ -36,6 +36,8 @@ public class GestionArtistes {
 					String photo = jeuResultat.getString( "photo" );
 					liste.add( new Artiste(id, nom, membre, photo) );
 				}
+				statement.close();
+				jeuResultat.close();
 		} catch ( SQLException e ) {
 			System.out.println( "Probleme de connexion" );
 		}
