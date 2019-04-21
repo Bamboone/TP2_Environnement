@@ -82,6 +82,7 @@ public class VueArtistes extends JFrame {
 		
 		JPanel panneauImageArtiste = new JPanel();
 		panneauImageArtiste.setBounds(10, 56, 135, 119);
+		
 		panneauArtistes.add(panneauImageArtiste);
 		
 		JButton btnRemplacer = new JButton("Remplacer");
