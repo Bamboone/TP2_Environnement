@@ -7,11 +7,14 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+
 import javax.swing.JButton;
 import javax.swing.JTable;
 import gestionDonnees.Album;
 import gestionDonnees.GestionArtistes;
 import gestionDonnees.ModeleArtistes;
+import renderers.RendererGras;
+import renderers.RendererMembre;
 
 import javax.swing.JCheckBox;
 import java.awt.Dimension;
@@ -66,6 +69,8 @@ public class VueArtistes extends JFrame {
 		ModeleArtistes modele = new ModeleArtistes(gestionnaire.getListeArtistes());
 		tableArtistes = new JTable(modele);
 		tableArtistes.setSelectionMode( ListSelectionModel.SINGLE_SELECTION );
+		tableArtistes.getColumnModel().getColumn(0).setCellRenderer(new RendererGras());
+		tableArtistes.getColumnModel().getColumn(2).setCellRenderer(new RendererMembre());
 		JScrollPane scroll = new JScrollPane(tableArtistes);
 		scroll.setBounds(155, 11, 388, 237);
 		panneauArtistes.add(scroll);
