@@ -9,6 +9,7 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
 import controleur.ArtisteBoutonListener;
+import controleur.ArtisteMouseListener;
 
 import javax.swing.JButton;
 import javax.swing.JTable;
@@ -159,6 +160,7 @@ public class VueArtistes extends JFrame {
 		panneauImageAlbum.setBounds(591, 37, 135, 119);
 		panneauInfos.add(panneauImageAlbum);
 		
+		tableArtistes.addMouseListener(new ArtisteMouseListener(tableArtistes, fieldNumero, fieldNom, checkBoxMembre, listeAlbums, modele, imageArtiste));
 		ArtisteBoutonListener boutonListener = new ArtisteBoutonListener(btnRecherche, btnRemplacer, fieldRecherche, modele, tableArtistes, gestionnaire);
 		btnRecherche.addActionListener(boutonListener);
 	}

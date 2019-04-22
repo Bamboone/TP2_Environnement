@@ -47,4 +47,9 @@ public class Album {
 		return idArtiste;
 	}
 	
+	@Override
+	public String toString(){
+		return String.valueOf(anneeSortie) + " - " + titre;
+	}
+	
 }
