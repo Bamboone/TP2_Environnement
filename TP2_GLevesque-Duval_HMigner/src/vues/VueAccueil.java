@@ -22,6 +22,7 @@ public class VueAccueil extends JFrame {
 	public VueAccueil() {
 		super( "Connexion" );
 		setSize( 400, 300 );
+		setResizable(false);
 		setDefaultCloseOperation( JFrame.DO_NOTHING_ON_CLOSE );
 		setLocationRelativeTo( null );
 		getContentPane().setLayout( null );

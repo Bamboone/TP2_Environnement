@@ -23,6 +23,7 @@ public class VueChoixTraitements extends JFrame{
 		BorderLayout borderLayout = (BorderLayout) getContentPane().getLayout();
 		borderLayout.setVgap(10);
 		setSize( 400, 200 );
+		setResizable(false);
 		setDefaultCloseOperation( JFrame.DO_NOTHING_ON_CLOSE );
 		setLocationRelativeTo( null );
 		
