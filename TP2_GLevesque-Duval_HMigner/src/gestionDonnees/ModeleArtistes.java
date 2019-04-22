@@ -64,4 +64,9 @@ public class ModeleArtistes extends AbstractTableModel {
 	public void setDonnees(ArrayList<Artiste> donnees) {
 		listeArtistes = donnees;
 	}
+	
+	public void modifierArtiste(int indice, Artiste artiste) {
+		listeArtistes.set(indice, artiste);
+		fireTableRowsUpdated(indice, indice);
+	}
 }

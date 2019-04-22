@@ -71,4 +71,19 @@ public class GestionArtistes {
 		}
 		return liste;
 	}
+	
+	public void modifierPhoto(String photo, int id) {
+		ControleConnexion.connecter();
+		connexion = ControleConnexion.getConnexion();
+		String requete = "UPDATE Artistes SET photo = ? WHERE id = ?";
+		try {
+			PreparedStatement statement = connexion.prepareStatement(requete);
+			statement.setString(1, photo);
+			statement.setInt(2, id);
+			statement.executeUpdate();
+			statement.close();
+		}catch(SQLException e){
+			System.out.println(e.getMessage());
+		}
+	}
 }
