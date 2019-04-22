@@ -1,6 +1,7 @@
 package gestionDonnees;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -45,5 +46,29 @@ public class GestionArtistes {
 		
 		return liste;
 		
+	}
+	
+	public ArrayList<Artiste> rechercheArtiste(String nomRecherche){
+		ArrayList<Artiste> liste = new ArrayList<Artiste>();
+		ControleConnexion.connecter();
+		connexion = ControleConnexion.getConnexion();
+		String requete = "SELECT * FROM Artistes WHERE nom LIKE ?";
+		try {
+			PreparedStatement statement = connexion.prepareStatement(requete);
+			statement.setString(1, "%" + nomRecherche + "%");
+			ResultSet jeuResultat = statement.executeQuery();
+			while(jeuResultat.next()) {
+				int id = jeuResultat.getInt( "id" );
+				String nom = jeuResultat.getString( "nom" );
+				boolean membre = jeuResultat.getBoolean( "membre" );
+				String photo = jeuResultat.getString( "photo" );
+				liste.add( new Artiste(id, nom, membre, photo) );
+			}
+			statement.close();
+			jeuResultat.close();
+		}catch(SQLException e){
+			System.out.println(e.getMessage());
+		}
+		return liste;
 	}
 }

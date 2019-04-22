@@ -8,6 +8,8 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
+import controleur.ArtisteBoutonListener;
+
 import javax.swing.JButton;
 import javax.swing.JTable;
 import gestionDonnees.Album;
@@ -80,9 +82,9 @@ public class VueArtistes extends JFrame {
 		lblArtistes.setBounds(24, 5, 112, 52);
 		panneauArtistes.add(lblArtistes);
 		
-		JPanel panneauImageArtiste = new JPanel();
-		panneauImageArtiste.setBounds(10, 56, 135, 119);
-		panneauArtistes.add(panneauImageArtiste);
+		JLabel imageArtiste = new JLabel();
+		imageArtiste.setBounds(10, 56, 135, 119);
+		panneauArtistes.add(imageArtiste);
 		
 		JButton btnRemplacer = new JButton("Remplacer");
 		btnRemplacer.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
@@ -156,5 +158,8 @@ public class VueArtistes extends JFrame {
 		JPanel panneauImageAlbum = new JPanel();
 		panneauImageAlbum.setBounds(591, 37, 135, 119);
 		panneauInfos.add(panneauImageAlbum);
+		
+		ArtisteBoutonListener boutonListener = new ArtisteBoutonListener(btnRecherche, btnRemplacer, fieldRecherche, modele, tableArtistes, gestionnaire);
+		btnRecherche.addActionListener(boutonListener);
 	}
 }
