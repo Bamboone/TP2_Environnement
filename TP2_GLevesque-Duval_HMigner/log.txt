@@ -1,0 +1,100 @@
+﻿commit 81e0f8add994b30a12edb37f5289ff33f9355c14 (HEAD -> livrable1, origin/livrable1)
+Author: Gabriel Levesque-Duval <glevesqueduval@gmail.com>
+Date:   Tue Apr 23 11:50:47 2019 -0400
+
+    Formattage du code
+
+commit ca69103707affc90405fd11ed1d7237fb67f1156
+Merge: dd0964b 4d9c8c2
+Author: Gabriel <gab9987@gmail.com>
+Date:   Mon Apr 22 10:28:10 2019 -0400
+
+    Merge branch 'dev' into livrable1
+
+commit 4d9c8c22b1a51cd7b46fb78c5ac75d04e59a2f9e
+Author: Gabriel <gab9987@gmail.com>
+Date:   Mon Apr 22 10:27:28 2019 -0400
+
+    Fenêtres non redimensionnable
+
+commit dd0964b3b3b5838e79342e976be9a170f56fff7c
+Author: HugoMigner <hugo.migner@gmail.com>
+Date:   Sun Apr 21 19:14:07 2019 -0400
+
+    Ajout des renderers, merge avec dev
+
+commit b11402eb05664d05309850367179b79d0f2fa24f
+Author: HugoMigner <hugo.migner@gmail.com>
+Date:   Sun Apr 21 19:08:44 2019 -0400
+
+    Ajout des renderers et attribution aux cellules du JTable
+
+commit 660d3129ecc0eba74ff3a2083c1f24b1b65fdb76
+Author: Gabriel <gab9987@gmail.com>
+Date:   Fri Apr 19 10:25:41 2019 -0400
+
+    Ajout de la confirmation pour quitter
+
+commit 37e61149dac915cb7a1c03cbd59c596992e8eca5
+Author: commitnotliving <hmigner@gmail.com>
+Date:   Thu Apr 18 12:29:43 2019 -0400
+
+    Ajout de la connexion à la BD et la JTable dans la vue
+
+commit cf40dbe7182a718e64f569f4211fd9f6a72f1275
+Author: commitnotliving <hmigner@gmail.com>
+Date:   Fri Apr 12 14:33:39 2019 -0400
+
+    Vue de gestion des artistes, listener pour choix, pas de BD
+
+commit e833372c6c39661fe56a5b2a400632121941abe5
+Merge: 18846d9 ca85e4f
+Author: commitnotliving <hmigner@gmail.com>
+Date:   Fri Apr 12 13:42:19 2019 -0400
+
+    Merge remote-tracking branch 'origin/dev' into dev
+
+    Conflicts:
+            TP2_GLevesque-Duval_HMigner/bin/.gitignore
+
+commit 18846d9bb0c7910c7e461200f089fd611acab7a4
+Author: commitnotliving <hmigner@gmail.com>
+Date:   Fri Apr 12 13:38:32 2019 -0400
+
+    Début fenêtre gestion des artistes
+
+commit ca85e4fd84b157f10892cfc136951b2e1a80e50a
+Author: Gabriel Levesque-Duval <glevesqueduval@gmail.com>
+Date:   Fri Apr 12 13:32:21 2019 -0400
+
+    Ajout des événements de la fenêtre de connexion dans une classe externe
+
+commit e8b7a7ef6f18242d4866cd0d453593a7212ef65c
+Author: Gabriel Levesque-Duval <glevesqueduval@gmail.com>
+Date:   Fri Apr 12 12:59:02 2019 -0400
+
+    Création des objets Artistes et Albums
+
+commit 0548c356569fc9e59b7d765430b7a3c27b197e3d
+Author: Gabriel Levesque-Duval <glevesqueduval@gmail.com>
+Date:   Fri Apr 12 11:45:59 2019 -0400
+
+    Mise en place des évenements de la fenêtre de connexion
+
+commit 26a6cffba598dccb412f34d22cfb3f1ee9192965
+Author: Gabriel Levesque-Duval <glevesqueduval@gmail.com>
+Date:   Fri Apr 12 11:15:43 2019 -0400
+
+    Mise en place de la vue des choix de traitements
+
+commit 30def02ff91dadce2bf23f8f12d6cac15e4ad8dd
+Author: Gabriel Levesque-Duval <glevesqueduval@gmail.com>
+Date:   Tue Apr 9 11:42:12 2019 -0400
+
+    Création du main et de la vue de connexion
+
+commit 764633db92a8e478ddfc70bf14e479517990a2e0 (origin/master)
+Author: Gabriel Levesque-Duval <glevesqueduval@gmail.com>
+Date:   Tue Apr 9 11:11:10 2019 -0400
+
+    Création du projet et de la BD avec 5 enregistrements
