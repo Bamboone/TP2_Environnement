@@ -9,8 +9,10 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
 import controleur.ArtisteBoutonListener;
+import controleur.ArtisteListeListener;
 import controleur.ArtisteMouseListener;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import gestionDonnees.Album;
@@ -161,10 +163,9 @@ public class VueArtistes extends JFrame {
 		listeAlbums.setBounds(334, 27, 208, 153);
 		panneauInfos.add(listeAlbums);
 		
-		JPanel panneauImageAlbum = new JPanel();
-		panneauImageAlbum.setBounds(591, 37, 135, 119);
-		panneauInfos.add(panneauImageAlbum);
-		
+		JLabel imageAlbum = new JLabel();
+		imageAlbum.setBounds(591, 37, 135, 119);
+		panneauInfos.add(imageAlbum);
 		tableArtistes.addMouseListener(new ArtisteMouseListener(tableArtistes, fieldNumero, fieldNom, checkBoxMembre, listeAlbums, modele, imageArtiste));
 		ArtisteBoutonListener boutonListener = new ArtisteBoutonListener(btnRecherche, btnRemplacer, btnModifier, 
 				btnSupprimer, btnNouveau, btnAjouter, btnQuitter, fieldRecherche, modele, tableArtistes, gestionnaire, 
@@ -172,5 +173,6 @@ public class VueArtistes extends JFrame {
 		btnRecherche.addActionListener(boutonListener);
 		btnRemplacer.addActionListener(boutonListener);
 		btnNouveau.addActionListener( boutonListener );
+		listeAlbums.addListSelectionListener( new ArtisteListeListener( listeAlbums, imageAlbum ) );
 	}
 }
