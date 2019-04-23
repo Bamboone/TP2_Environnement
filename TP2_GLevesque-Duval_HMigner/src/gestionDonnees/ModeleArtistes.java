@@ -4,19 +4,19 @@ import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
 
-public class ModeleArtistes extends AbstractTableModel{
-	
+public class ModeleArtistes extends AbstractTableModel {
+
 	private static final long serialVersionUID = 1L;
 
 	private ArrayList<Artiste> listeArtistes;
-	
-	private String[] lesTitres = {"Numéro", "Nom", "Membre"};
-	
+
+	private String[] lesTitres = { "Numéro", "Nom", "Membre" };
+
 	public ModeleArtistes() {
-		
+
 	}
-	
-	public ModeleArtistes(ArrayList<Artiste> liste) {
+
+	public ModeleArtistes( ArrayList<Artiste> liste ) {
 		listeArtistes = liste;
 	}
 
@@ -32,22 +32,22 @@ public class ModeleArtistes extends AbstractTableModel{
 
 	@Override
 	public Object getValueAt( int rowIndex, int columnIndex ) {
-		switch(columnIndex) {
-		case 0 :
+		switch ( columnIndex ) {
+		case 0:
 			return listeArtistes.get( rowIndex ).getId();
 		case 1:
 			return listeArtistes.get( rowIndex ).getNom();
 		case 2:
-			return (listeArtistes.get( rowIndex ).getMembre() ? "Oui" : "Non");
+			return ( listeArtistes.get( rowIndex ).getMembre() ? "Oui" : "Non" );
 		case 3:
 			return listeArtistes.get( rowIndex ).getPhoto();
-		default :
+		default:
 			return null;
 		}
 	}
-	
+
 	@Override
-	public String getColumnName(int columnIndex) {
+	public String getColumnName( int columnIndex ) {
 		return lesTitres[columnIndex];
 	}
 }
