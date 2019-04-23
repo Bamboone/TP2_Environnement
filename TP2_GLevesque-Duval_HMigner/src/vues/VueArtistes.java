@@ -30,6 +30,8 @@ public class VueArtistes extends JFrame {
 	private JTable tableArtistes;
 	private JTextField fieldNumero;
 	private JTextField fieldNom;
+	private JCheckBox checkBoxMembre = new JCheckBox("");
+	private JList<Album> listeAlbums = new JList<Album>();
 	
 	public VueArtistes() {
 		super("Gestion des artistes");
@@ -138,21 +140,24 @@ public class VueArtistes extends JFrame {
 		panneauInfos.add(lblMembre);
 		
 		fieldNumero = new JTextField();
+		fieldNumero.setEnabled( false );
 		fieldNumero.setBounds(75, 72, 237, 20);
 		panneauInfos.add(fieldNumero);
 		fieldNumero.setColumns(10);
 		
 		fieldNom = new JTextField();
+		fieldNom.setEnabled( false );
 		fieldNom.setColumns(10);
 		fieldNom.setBounds(75, 106, 237, 20);
 		panneauInfos.add(fieldNom);
 		
-		JCheckBox checkBoxMembre = new JCheckBox("");
+		
+		checkBoxMembre.setEnabled( false );
 		checkBoxMembre.setSize(new Dimension(200, 200));
 		checkBoxMembre.setBounds(75, 142, 21, 23);
 		panneauInfos.add(checkBoxMembre);
 		
-		JList<Album> listeAlbums = new JList<Album>();
+		
 		listeAlbums.setBounds(334, 27, 208, 153);
 		panneauInfos.add(listeAlbums);
 		
@@ -161,8 +166,11 @@ public class VueArtistes extends JFrame {
 		panneauInfos.add(panneauImageAlbum);
 		
 		tableArtistes.addMouseListener(new ArtisteMouseListener(tableArtistes, fieldNumero, fieldNom, checkBoxMembre, listeAlbums, modele, imageArtiste));
-		ArtisteBoutonListener boutonListener = new ArtisteBoutonListener(btnRecherche, btnRemplacer, fieldRecherche, modele, tableArtistes, gestionnaire, imageArtiste);
+		ArtisteBoutonListener boutonListener = new ArtisteBoutonListener(btnRecherche, btnRemplacer, btnModifier, 
+				btnSupprimer, btnNouveau, btnAjouter, btnQuitter, fieldRecherche, modele, tableArtistes, gestionnaire, 
+				imageArtiste, fieldNumero, fieldNom, checkBoxMembre, listeAlbums);
 		btnRecherche.addActionListener(boutonListener);
 		btnRemplacer.addActionListener(boutonListener);
+		btnNouveau.addActionListener( boutonListener );
 	}
 }
