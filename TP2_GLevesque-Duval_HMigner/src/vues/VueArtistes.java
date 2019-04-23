@@ -166,7 +166,7 @@ public class VueArtistes extends JFrame {
 		JLabel imageAlbum = new JLabel();
 		imageAlbum.setBounds(591, 37, 135, 119);
 		panneauInfos.add(imageAlbum);
-		tableArtistes.addMouseListener(new ArtisteMouseListener(tableArtistes, fieldNumero, fieldNom, checkBoxMembre, listeAlbums, modele, imageArtiste));
+		tableArtistes.addMouseListener(new ArtisteMouseListener(tableArtistes, fieldNumero, fieldNom, checkBoxMembre, modele, imageArtiste, listeAlbums));
 		ArtisteBoutonListener boutonListener = new ArtisteBoutonListener(btnRecherche, btnRemplacer, btnModifier, 
 				btnSupprimer, btnNouveau, btnAjouter, btnQuitter, fieldRecherche, modele, tableArtistes, gestionnaire, 
 				imageArtiste, fieldNumero, fieldNom, checkBoxMembre, listeAlbums);
