@@ -86,4 +86,21 @@ public class GestionArtistes {
 			System.out.println(e.getMessage());
 		}
 	}
+	
+	public void ajouterArtiste(Artiste artiste) {
+		ControleConnexion.connecter();
+		connexion = ControleConnexion.getConnexion();
+		String requete = "INSERT INTO Artistes (id, nom, membre, photo) VALUES (?, ?, ?, ?);";
+		try {
+			PreparedStatement statement = connexion.prepareStatement( requete );
+			statement.setInt( 1, artiste.getId());
+			statement.setString( 2, artiste.getNom());
+			statement.setBoolean( 3, artiste.getMembre());
+			statement.setString( 4, artiste.getPhoto() );
+			statement.executeUpdate();
+			statement.close();
+		}catch(SQLException e) {
+			System.out.println(e.getMessage());
+		}
+	}
 }

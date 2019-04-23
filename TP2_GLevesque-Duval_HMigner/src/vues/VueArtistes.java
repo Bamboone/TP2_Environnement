@@ -169,10 +169,12 @@ public class VueArtistes extends JFrame {
 		tableArtistes.addMouseListener(new ArtisteMouseListener(tableArtistes, fieldNumero, fieldNom, checkBoxMembre, modele, imageArtiste, listeAlbums));
 		ArtisteBoutonListener boutonListener = new ArtisteBoutonListener(btnRecherche, btnRemplacer, btnModifier, 
 				btnSupprimer, btnNouveau, btnAjouter, btnQuitter, fieldRecherche, modele, tableArtistes, gestionnaire, 
-				imageArtiste, fieldNumero, fieldNom, checkBoxMembre, listeAlbums);
+				imageArtiste, fieldNumero, fieldNom, checkBoxMembre, listeAlbums, this);
 		btnRecherche.addActionListener(boutonListener);
 		btnRemplacer.addActionListener(boutonListener);
 		btnNouveau.addActionListener( boutonListener );
+		btnQuitter.addActionListener( boutonListener );
+		btnAjouter.addActionListener( boutonListener );
 		listeAlbums.addListSelectionListener( new ArtisteListeListener( listeAlbums, imageAlbum ) );
 	}
 }
