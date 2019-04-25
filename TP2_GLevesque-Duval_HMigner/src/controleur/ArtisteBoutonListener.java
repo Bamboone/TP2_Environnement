@@ -43,6 +43,7 @@ public class ArtisteBoutonListener implements ActionListener{
 	private JCheckBox checkBoxMembre;
 	private JList<Album> listeAlbums;
 	private JFrame fenetre;
+	private String imageTemp;
 
 	public ArtisteBoutonListener(JButton btnRecherche, JButton btnRemplacer, JButton btnModifier, JButton btnSupprimer, 
 								JButton btnNouveau, JButton btnAjouter, JButton btnQuitter, JTextField txtRecherche, 
@@ -78,15 +79,18 @@ public class ArtisteBoutonListener implements ActionListener{
 			if(!table.getSelectionModel().isSelectionEmpty()) {
 				JFileChooser choixFichier = new JFileChooser(System.getProperty("user.dir")+"\\src\\images");
 				if ( choixFichier.showOpenDialog( null ) == JFileChooser.APPROVE_OPTION ) {
-					int indice = table.getSelectedRow();
-					Artiste artiste = modele.getElement(indice);
-					File f = choixFichier.getSelectedFile();
-					artiste.setPhoto(f.getName());
-					gestionnaire.modifierPhoto(artiste.getPhoto(), artiste.getId());
-					modele.modifierArtiste(indice, artiste);
-					modele.fireTableDataChanged();
+					int indice = Integer.parseInt( fieldNumero.getText() ) - 1;
 					Image image;
-					image = new ImageIcon(ArtisteBoutonListener.class.getResource( "../images/" + artiste.getPhoto() ) ).getImage().getScaledInstance( 135, 119, Image.SCALE_SMOOTH );
+					Artiste artiste = modele.getElement( indice );
+					File f = choixFichier.getSelectedFile();
+					artiste.setPhoto( f.getName() );
+					gestionnaire.modifierPhoto( artiste.getPhoto(), artiste.getId() );
+					modele.modifierArtiste( indice, artiste );
+					modele.fireTableDataChanged();
+					image = new ImageIcon(
+								ArtisteBoutonListener.class.getResource( "../images/" + artiste.getPhoto() ) )
+										.getImage().getScaledInstance( 135, 119, Image.SCALE_SMOOTH );
+					imageTemp = "default.png";
 					lblImage.setIcon(new ImageIcon(image));
 					table.setRowSelectionInterval(indice, indice);
 				}
@@ -110,7 +114,7 @@ public class ArtisteBoutonListener implements ActionListener{
 			listModel.removeAllElements();
 			lblImage.setIcon(null);
 		}else if(e.getSource() == btnAjouter) {
-			Artiste artiste = new Artiste(Integer.parseInt( fieldNumero.getText() ), fieldNom.getText(), checkBoxMembre.isSelected(), "default.png");
+			Artiste artiste = new Artiste(Integer.parseInt( fieldNumero.getText() ), fieldNom.getText(), checkBoxMembre.isSelected(), imageTemp);
 			modele.ajouterDonnee( artiste );
 			modele.fireTableDataChanged();
 			gestionnaire.ajouterArtiste( artiste );
