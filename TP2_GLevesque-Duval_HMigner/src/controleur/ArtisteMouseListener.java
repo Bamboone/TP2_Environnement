@@ -71,14 +71,16 @@ public class ArtisteMouseListener extends MouseAdapter {
 				image = new ImageIcon(ArtisteBoutonListener.class.getResource( "../images/default.png" )).getImage().getScaledInstance( 135, 119, Image.SCALE_SMOOTH );
 			}
 			lblImage.setIcon(new ImageIcon(image));
-			activerBoutons();
+			activerChamps();
 		}
 	}
 	
-	public void activerBoutons() {
+	public void activerChamps() {
 		btnModifier.setEnabled( false );
 		btnSupprimer.setEnabled( true );
 		btnAjouter.setEnabled( false );
 		btnRemplacer.setEnabled( false );
+		txtNom.setEnabled( false );
+		checkMembre.setEnabled( false );
 	}
 }
