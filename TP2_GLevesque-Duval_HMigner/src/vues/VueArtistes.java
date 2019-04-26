@@ -12,8 +12,8 @@ import controleur.ArtisteBoutonListener;
 import controleur.ArtisteListeListener;
 import controleur.ArtisteMouseListener;
 import controleur.ArtisteWindowListener;
+import controleur.MenuListener;
 
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import gestionDonnees.Album;
@@ -25,6 +25,9 @@ import renderers.RendererMembre;
 import javax.swing.JCheckBox;
 import java.awt.Dimension;
 import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 public class VueArtistes extends JFrame {
 
@@ -35,6 +38,7 @@ public class VueArtistes extends JFrame {
 	private JTextField fieldNom;
 	private JCheckBox checkBoxMembre = new JCheckBox("");
 	private JList<Album> listeAlbums = new JList<Album>();
+	private JMenu menuAide;
 	
 	public VueArtistes() {
 		super("Gestion des artistes");
@@ -171,6 +175,16 @@ public class VueArtistes extends JFrame {
 		JLabel imageAlbum = new JLabel();
 		imageAlbum.setBounds(591, 37, 135, 119);
 		panneauInfos.add(imageAlbum);
+		
+		JMenuItem aide = new JMenuItem( "Aide en ligne" );
+		JMenuBar menuBar = new JMenuBar();
+		menuAide = new JMenu( "Aide" );
+		menuAide.add( aide );
+		menuBar.add( menuAide );
+		
+		add( menuBar );
+		
+		
 		tableArtistes.addMouseListener(new ArtisteMouseListener(tableArtistes, fieldNumero, fieldNom, checkBoxMembre, modele, imageArtiste, listeAlbums, btnAjouter, btnModifier, btnRemplacer, btnSupprimer));
 		ArtisteBoutonListener boutonListener = new ArtisteBoutonListener(btnRecherche, btnRemplacer, btnModifier, 
 				btnSupprimer, btnNouveau, btnAjouter, btnQuitter, fieldRecherche, modele, tableArtistes, gestionnaire, 
@@ -182,5 +196,6 @@ public class VueArtistes extends JFrame {
 		btnAjouter.addActionListener( boutonListener );
 		listeAlbums.addListSelectionListener( new ArtisteListeListener( listeAlbums, imageAlbum ) );
 		addWindowListener( new ArtisteWindowListener() );
+		aide.addActionListener( new MenuListener(aide) );
 	}
 }
