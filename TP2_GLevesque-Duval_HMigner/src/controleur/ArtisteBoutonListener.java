@@ -24,8 +24,8 @@ import gestionDonnees.GestionArtistes;
 import gestionDonnees.ModeleArtistes;
 import vues.VueChoixTraitements;
 
-public class ArtisteBoutonListener implements ActionListener{
-	
+public class ArtisteBoutonListener implements ActionListener {
+
 	private JButton btnRecherche;
 	private ModeleArtistes modele;
 	private GestionArtistes gestionnaire;
@@ -44,12 +44,12 @@ public class ArtisteBoutonListener implements ActionListener{
 	private JList<Album> listeAlbums;
 	private JFrame fenetre;
 	private String imageTemp;
+	private boolean imageModifiee = false;
 
-	public ArtisteBoutonListener(JButton btnRecherche, JButton btnRemplacer, JButton btnModifier, JButton btnSupprimer, 
-								JButton btnNouveau, JButton btnAjouter, JButton btnQuitter, JTextField txtRecherche, 
-								ModeleArtistes modele, JTable table, GestionArtistes gestionnaire, JLabel lblImage, 
-								JTextField fieldNumero, JTextField fieldNom, JCheckBox checkBoxMembre,
-								JList<Album> listeAlbums, JFrame fenetre) {
+	public ArtisteBoutonListener( JButton btnRecherche, JButton btnRemplacer, JButton btnModifier,
+			JButton btnSupprimer, JButton btnNouveau, JButton btnAjouter, JButton btnQuitter, JTextField txtRecherche,
+			ModeleArtistes modele, JTable table, GestionArtistes gestionnaire, JLabel lblImage, JTextField fieldNumero,
+			JTextField fieldNom, JCheckBox checkBoxMembre, JList<Album> listeAlbums, JFrame fenetre ) {
 		this.btnRecherche = btnRecherche;
 		this.modele = modele;
 		this.gestionnaire = gestionnaire;
@@ -68,72 +68,80 @@ public class ArtisteBoutonListener implements ActionListener{
 		this.listeAlbums = listeAlbums;
 		this.fenetre = fenetre;
 	}
-	
+
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == btnRecherche) {
-			
-			modele.setDonnees(gestionnaire.rechercheArtiste(txtRecherche.getText()));
+	public void actionPerformed( ActionEvent e ) {
+
+		if ( e.getSource() == btnRecherche ) {
+
+			modele.setDonnees( gestionnaire.rechercheArtiste( txtRecherche.getText() ) );
 			modele.fireTableDataChanged();
-		}else if(e.getSource() == btnRemplacer) {
-			if(!table.getSelectionModel().isSelectionEmpty()) {
-				JFileChooser choixFichier = new JFileChooser(System.getProperty("user.dir")+"\\src\\images");
-				if ( choixFichier.showOpenDialog( null ) == JFileChooser.APPROVE_OPTION ) {
-					int indice = Integer.parseInt( fieldNumero.getText() ) - 1;
-					Image image;
-					Artiste artiste = modele.getElement( indice );
-					File f = choixFichier.getSelectedFile();
-					artiste.setPhoto( f.getName() );
-					gestionnaire.modifierPhoto( artiste.getPhoto(), artiste.getId() );
-					modele.modifierArtiste( indice, artiste );
-					modele.fireTableDataChanged();
-					image = new ImageIcon(
-								ArtisteBoutonListener.class.getResource( "../images/" + artiste.getPhoto() ) )
-										.getImage().getScaledInstance( 135, 119, Image.SCALE_SMOOTH );
-					imageTemp = "default.png";
-					lblImage.setIcon(new ImageIcon(image));
-					table.setRowSelectionInterval(indice, indice);
-				}
+		} else if ( e.getSource() == btnRemplacer ) {
+			JFileChooser choixFichier = new JFileChooser( System.getProperty( "user.dir" ) + "\\src\\images" );
+			if ( choixFichier.showOpenDialog( null ) == JFileChooser.APPROVE_OPTION ) {
+				Image image;
+				File f = choixFichier.getSelectedFile();
+				imageTemp = f.getName();
+				image = new ImageIcon( ArtisteBoutonListener.class.getResource( "../images/" + imageTemp ) ).getImage()
+						.getScaledInstance( 135, 119, Image.SCALE_SMOOTH );
+				lblImage.setIcon( new ImageIcon( image ) );
+				imageModifiee = true;
 			}
-		}else if(e.getSource() == btnQuitter) {
-			int response = JOptionPane.showConfirmDialog(null, "Voulez-vous vraiment quitter?", "Confirmation",
-					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-			if (response == JOptionPane.YES_OPTION) {
+		} else if ( e.getSource() == btnQuitter ) {
+			int response = JOptionPane.showConfirmDialog( null, "Voulez-vous vraiment quitter?", "Confirmation",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE );
+			if ( response == JOptionPane.YES_OPTION ) {
 				VueChoixTraitements accueil = new VueChoixTraitements();
 				fenetre.dispose();
 				accueil.setVisible( true );
+				ControleConnexion.fermerConnexion();
 			}
-		}else if(e.getSource() == btnNouveau) {
-			if(!fieldNom.isEnabled()) {
+		} else if ( e.getSource() == btnNouveau ) {
+			if ( !fieldNom.isEnabled() ) {
 				toggleInfos();
 			}
 			fieldNom.setText( "" );
 			checkBoxMembre.setSelected( false );
-			fieldNumero.setText( Integer.toString(modele.getRowCount() + 1) );
-			DefaultListModel listModel = (DefaultListModel) listeAlbums.getModel();
-			listModel.removeAllElements();
-			lblImage.setIcon(null);
-		}else if(e.getSource() == btnAjouter) {
-			Artiste artiste = new Artiste(Integer.parseInt( fieldNumero.getText() ), fieldNom.getText(), checkBoxMembre.isSelected(), imageTemp);
+			fieldNumero.setText( Integer.toString( modele.getRowCount() + 1 ) );
+			( (DefaultListModel<Album>) listeAlbums.getModel() ).removeAllElements();
+			lblImage.setIcon( null );
+			imageModifiee = false;
+		} else if ( e.getSource() == btnAjouter ) {
+			Artiste artiste = new Artiste( Integer.parseInt( fieldNumero.getText() ), fieldNom.getText(),
+					checkBoxMembre.isSelected(), imageModifiee ? imageTemp : "default.png" );
 			modele.ajouterDonnee( artiste );
 			modele.fireTableDataChanged();
 			gestionnaire.ajouterArtiste( artiste );
+			table.setRowSelectionInterval( artiste.getId()-1, artiste.getId()-1 );
+			activerBoutons();
+			toggleInfos();
 		}
-		
+
 	}
-	
+
 	public void toggleInfos() {
-		if(fieldNom.isEnabled()) {
+		if ( fieldNom.isEnabled() ) {
 			fieldNom.setEnabled( false );
-		}else if(!fieldNom.isEnabled()) {
+		} else if ( !fieldNom.isEnabled() ) {
 			fieldNom.setEnabled( true );
 		}
-		
-		if(checkBoxMembre.isEnabled()) {
+
+		if ( checkBoxMembre.isEnabled() ) {
 			checkBoxMembre.setEnabled( false );
-		}else if(!checkBoxMembre.isEnabled()) {
+		} else if ( !checkBoxMembre.isEnabled() ) {
 			checkBoxMembre.setEnabled( true );
 		}
+		btnAjouter.setEnabled( true );
+		btnRemplacer.setEnabled( true );
+		table.clearSelection();
+		btnSupprimer.setEnabled( false );
+	}
+	
+	public void activerBoutons() {
+		btnModifier.setEnabled( false );
+		btnSupprimer.setEnabled( true );
+		btnAjouter.setEnabled( false );
+		btnRemplacer.setEnabled( false );
 	}
 
 }

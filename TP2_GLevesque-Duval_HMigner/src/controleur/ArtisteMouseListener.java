@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -27,8 +28,12 @@ public class ArtisteMouseListener extends MouseAdapter {
 	private JLabel lblImage;
 	private DefaultListModel<Album> donnees = new DefaultListModel<>();
 	private JList<Album> listeAlbums;
+	private JButton btnRemplacer;
+	private JButton btnModifier;
+	private JButton btnSupprimer;
+	private JButton btnAjouter;
 
-	public ArtisteMouseListener(JTable table, JTextField txtId, JTextField txtNom, JCheckBox checkMembre, ModeleArtistes modele, JLabel lblImage, JList<Album> listeAlbums) {
+	public ArtisteMouseListener(JTable table, JTextField txtId, JTextField txtNom, JCheckBox checkMembre, ModeleArtistes modele, JLabel lblImage, JList<Album> listeAlbums, JButton btnAjouter, JButton btnModifier, JButton btnRemplacer, JButton btnSupprimer ) {
 		this.table = table;
 		this.txtId = txtId;
 		this.txtNom = txtNom;
@@ -36,6 +41,10 @@ public class ArtisteMouseListener extends MouseAdapter {
 		this.modele = modele;
 		this.lblImage = lblImage;
 		this.listeAlbums = listeAlbums;
+		this.btnAjouter =btnAjouter;
+		this.btnModifier = btnModifier;
+		this.btnRemplacer = btnRemplacer;
+		this.btnSupprimer = btnSupprimer;
 		listeAlbums.setModel( donnees );
 	}
 
@@ -62,6 +71,14 @@ public class ArtisteMouseListener extends MouseAdapter {
 				image = new ImageIcon(ArtisteBoutonListener.class.getResource( "../images/default.png" )).getImage().getScaledInstance( 135, 119, Image.SCALE_SMOOTH );
 			}
 			lblImage.setIcon(new ImageIcon(image));
+			activerBoutons();
 		}
+	}
+	
+	public void activerBoutons() {
+		btnModifier.setEnabled( false );
+		btnSupprimer.setEnabled( true );
+		btnAjouter.setEnabled( false );
+		btnRemplacer.setEnabled( false );
 	}
 }

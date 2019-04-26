@@ -11,6 +11,7 @@ import javax.swing.ListSelectionModel;
 import controleur.ArtisteBoutonListener;
 import controleur.ArtisteListeListener;
 import controleur.ArtisteMouseListener;
+import controleur.ArtisteWindowListener;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -94,6 +95,7 @@ public class VueArtistes extends JFrame {
 		JButton btnRemplacer = new JButton("Remplacer");
 		btnRemplacer.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		btnRemplacer.setBounds(10, 197, 135, 45);
+		btnRemplacer.setEnabled( false );
 		panneauArtistes.add(btnRemplacer);
 		
 		JButton btnNouveau = new JButton("Nouveau");
@@ -104,16 +106,19 @@ public class VueArtistes extends JFrame {
 		JButton btnAjouter = new JButton("Ajouter");
 		btnAjouter.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		btnAjouter.setBounds(592, 73, 135, 40);
+		btnAjouter.setEnabled( false );
 		panneauArtistes.add(btnAjouter);
 		
 		JButton btnModifier = new JButton("Modifier");
 		btnModifier.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		btnModifier.setBounds(592, 135, 135, 40);
+		btnModifier.setEnabled( false );
 		panneauArtistes.add(btnModifier);
 		
 		JButton btnSupprimer = new JButton("Supprimer");
 		btnSupprimer.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		btnSupprimer.setBounds(592, 199, 135, 40);
+		btnSupprimer.setEnabled( false );
 		panneauArtistes.add(btnSupprimer);
 		
 		JPanel panneauInfos = new JPanel();
@@ -166,7 +171,7 @@ public class VueArtistes extends JFrame {
 		JLabel imageAlbum = new JLabel();
 		imageAlbum.setBounds(591, 37, 135, 119);
 		panneauInfos.add(imageAlbum);
-		tableArtistes.addMouseListener(new ArtisteMouseListener(tableArtistes, fieldNumero, fieldNom, checkBoxMembre, modele, imageArtiste, listeAlbums));
+		tableArtistes.addMouseListener(new ArtisteMouseListener(tableArtistes, fieldNumero, fieldNom, checkBoxMembre, modele, imageArtiste, listeAlbums, btnAjouter, btnModifier, btnRemplacer, btnSupprimer));
 		ArtisteBoutonListener boutonListener = new ArtisteBoutonListener(btnRecherche, btnRemplacer, btnModifier, 
 				btnSupprimer, btnNouveau, btnAjouter, btnQuitter, fieldRecherche, modele, tableArtistes, gestionnaire, 
 				imageArtiste, fieldNumero, fieldNom, checkBoxMembre, listeAlbums, this);
@@ -176,5 +181,6 @@ public class VueArtistes extends JFrame {
 		btnQuitter.addActionListener( boutonListener );
 		btnAjouter.addActionListener( boutonListener );
 		listeAlbums.addListSelectionListener( new ArtisteListeListener( listeAlbums, imageAlbum ) );
+		addWindowListener( new ArtisteWindowListener() );
 	}
 }

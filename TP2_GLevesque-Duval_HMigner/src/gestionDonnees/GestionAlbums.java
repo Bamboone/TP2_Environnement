@@ -23,7 +23,6 @@ public class GestionAlbums {
 	}
 	
 	private ArrayList<Album> obtenirListeAlbumsArtiste(int idArtiste) {
-		ControleConnexion.connecter();
 		connexion = ControleConnexion.getConnexion();
 		ArrayList<Album> liste = new ArrayList<Album>();
 		String requete = "SELECT * FROM Albums WHERE id_artiste = ?";
@@ -44,8 +43,7 @@ public class GestionAlbums {
 		} catch ( SQLException e ) {
 			System.out.println( "Probleme de connexion" + e.getMessage());
 		}
-		ControleConnexion.fermerConnexion();
-		
+
 		return liste;
 		
 	}

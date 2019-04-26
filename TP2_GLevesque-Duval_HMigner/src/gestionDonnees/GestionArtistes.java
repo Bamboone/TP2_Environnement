@@ -24,7 +24,6 @@ public class GestionArtistes {
 	}
 	
 	private ArrayList<Artiste> obtenirListeArtistes() {
-		ControleConnexion.connecter();
 		connexion = ControleConnexion.getConnexion();
 		ArrayList<Artiste> liste = new ArrayList<Artiste>();
 		String requete = "SELECT * FROM Artistes";
@@ -42,7 +41,6 @@ public class GestionArtistes {
 		} catch ( SQLException e ) {
 			System.out.println( "Probleme de connexion" );
 		}
-		ControleConnexion.fermerConnexion();
 		
 		return liste;
 		
@@ -50,7 +48,6 @@ public class GestionArtistes {
 	
 	public ArrayList<Artiste> rechercheArtiste(String nomRecherche){
 		ArrayList<Artiste> liste = new ArrayList<Artiste>();
-		ControleConnexion.connecter();
 		connexion = ControleConnexion.getConnexion();
 		String requete = "SELECT * FROM Artistes WHERE nom LIKE ?";
 		try {
@@ -73,7 +70,6 @@ public class GestionArtistes {
 	}
 	
 	public void modifierPhoto(String photo, int id) {
-		ControleConnexion.connecter();
 		connexion = ControleConnexion.getConnexion();
 		String requete = "UPDATE Artistes SET photo = ? WHERE id = ?";
 		try {
@@ -88,7 +84,6 @@ public class GestionArtistes {
 	}
 	
 	public void ajouterArtiste(Artiste artiste) {
-		ControleConnexion.connecter();
 		connexion = ControleConnexion.getConnexion();
 		String requete = "INSERT INTO Artistes (id, nom, membre, photo) VALUES (?, ?, ?, ?);";
 		try {

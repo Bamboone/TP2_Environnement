@@ -37,6 +37,7 @@ public class ChoixListener extends WindowAdapter implements ActionListener {
 	@Override
 	public void actionPerformed( ActionEvent e ) {
 		if(e.getSource() == btnArtistes) {
+			ControleConnexion.connecter();
 			VueArtistes fen = new VueArtistes();
 			fenetre.dispose();
 			fen.setVisible( true );
