@@ -21,7 +21,7 @@ public class MenuListener implements ActionListener{
 
 		if(e.getSource() == aide) {
 			try {
-				File fichier = new File( "c:aideEnLigne.chm" );
+				File fichier = new File( System.getProperty( "user.dir" ) + "\\aideEnLigne.chm" );
 				Desktop.getDesktop().open( fichier );
 			}catch(IOException ex) {
 				System.out.println( ex.getMessage() );

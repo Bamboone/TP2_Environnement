@@ -5,6 +5,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Toolkit;
+
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
@@ -43,9 +45,24 @@ public class VueArtistes extends JFrame {
 	public VueArtistes() {
 		super("Gestion des artistes");
 		setSize(800, 600);
+		
+		// Lignes de code pour l'adaptation de la taille à l'écran du user
+		
+//		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+//	    setBounds(0,0, (int) Math.round( screenSize.width * 0.75 ), (int) Math.round( screenSize.height * 0.75 ));
+		
 		getContentPane().setLayout(null);
 		setResizable(false);
 		setLocationRelativeTo(null);
+		
+		JMenuItem aide = new JMenuItem( "Aide en ligne" );
+		JMenuBar menuBar = new JMenuBar();
+		menuBar.setBounds(0, 0, 794, 21);
+		getContentPane().add(menuBar);
+		menuAide = new JMenu( "Aide" );
+		menuAide.add( aide );
+		menuBar.add( menuAide );
+		aide.addActionListener( new MenuListener(aide) );
 		
 		JPanel panneauRecherche = new JPanel();
 		panneauRecherche.setBounds(10, 11, 764, 85);
@@ -176,14 +193,6 @@ public class VueArtistes extends JFrame {
 		imageAlbum.setBounds(591, 37, 135, 119);
 		panneauInfos.add(imageAlbum);
 		
-		JMenuItem aide = new JMenuItem( "Aide en ligne" );
-		JMenuBar menuBar = new JMenuBar();
-		menuAide = new JMenu( "Aide" );
-		menuAide.add( aide );
-		menuBar.add( menuAide );
-		
-		add( menuBar );
-		
 		
 		tableArtistes.addMouseListener(new ArtisteMouseListener(tableArtistes, fieldNumero, fieldNom, checkBoxMembre, modele, imageArtiste, listeAlbums, btnAjouter, btnModifier, btnRemplacer, btnSupprimer));
 		ArtisteBoutonListener boutonListener = new ArtisteBoutonListener(btnRecherche, btnRemplacer, btnModifier, 
@@ -194,8 +203,9 @@ public class VueArtistes extends JFrame {
 		btnNouveau.addActionListener( boutonListener );
 		btnQuitter.addActionListener( boutonListener );
 		btnAjouter.addActionListener( boutonListener );
+		btnSupprimer.addActionListener( boutonListener );
+		btnModifier.addActionListener( boutonListener );
 		listeAlbums.addListSelectionListener( new ArtisteListeListener( listeAlbums, imageAlbum ) );
 		addWindowListener( new ArtisteWindowListener() );
-		aide.addActionListener( new MenuListener(aide) );
 	}
 }

@@ -76,6 +76,7 @@ public class ArtisteBoutonListener implements ActionListener {
 
 			modele.setDonnees( gestionnaire.rechercheArtiste( txtRecherche.getText() ) );
 			modele.fireTableDataChanged();
+			clearInfos();
 		} else if ( e.getSource() == btnRemplacer ) {
 			JFileChooser choixFichier = new JFileChooser( System.getProperty( "user.dir" ) + "\\src\\images" );
 			if ( choixFichier.showOpenDialog( null ) == JFileChooser.APPROVE_OPTION ) {
@@ -106,15 +107,36 @@ public class ArtisteBoutonListener implements ActionListener {
 			( (DefaultListModel<Album>) listeAlbums.getModel() ).removeAllElements();
 			lblImage.setIcon( null );
 			imageModifiee = false;
+			btnAjouter.setEnabled( true );
+			btnRemplacer.setEnabled( true );
 		} else if ( e.getSource() == btnAjouter ) {
 			Artiste artiste = new Artiste( Integer.parseInt( fieldNumero.getText() ), fieldNom.getText(),
 					checkBoxMembre.isSelected(), imageModifiee ? imageTemp : "default.png" );
 			modele.ajouterDonnee( artiste );
 			modele.fireTableDataChanged();
 			gestionnaire.ajouterArtiste( artiste );
-			table.setRowSelectionInterval( artiste.getId()-1, artiste.getId()-1 );
 			activerBoutons();
 			toggleInfos();
+			clearInfos();
+		} else if(e.getSource() == btnSupprimer) {
+			int indice = table.getSelectedRow() + 1;
+			modele.supprimerArtiste( indice - 1 );
+			modele.fireTableDataChanged();
+			gestionnaire.supprimerArtiste(indice);
+			activerBoutons();
+			clearInfos();
+		} else if(e.getSource() == btnModifier) {
+			int indice = table.getSelectedRow() + 1;
+			String nom = fieldNom.getText();
+			boolean membre = checkBoxMembre.isSelected();
+			String photo = imageModifiee ? imageTemp : (String) modele.getValueAt( indice - 1, 3 );
+			Artiste artiste = new Artiste(Integer.parseInt(fieldNumero.getText()), nom, membre, photo);
+			modele.modifierArtiste( indice - 1, artiste );
+			modele.fireTableDataChanged();
+			gestionnaire.modifierArtiste( artiste, indice );
+			activerBoutons();
+			toggleInfos();
+			clearInfos();
 		}
 
 	}
@@ -131,17 +153,24 @@ public class ArtisteBoutonListener implements ActionListener {
 		} else if ( !checkBoxMembre.isEnabled() ) {
 			checkBoxMembre.setEnabled( true );
 		}
-		btnAjouter.setEnabled( true );
-		btnRemplacer.setEnabled( true );
 		table.clearSelection();
 		btnSupprimer.setEnabled( false );
 	}
 	
 	public void activerBoutons() {
 		btnModifier.setEnabled( false );
-		btnSupprimer.setEnabled( true );
+		btnSupprimer.setEnabled( false );
 		btnAjouter.setEnabled( false );
 		btnRemplacer.setEnabled( false );
+	}
+	
+	public void clearInfos() {
+		lblImage.setIcon( null );
+		fieldNumero.setText( "" );
+		fieldNom.setText( "" );
+		checkBoxMembre.setEnabled( false );
+		( (DefaultListModel<Album>) listeAlbums.getModel() ).removeAllElements();
+		btnSupprimer.setEnabled( false );
 	}
 
 }

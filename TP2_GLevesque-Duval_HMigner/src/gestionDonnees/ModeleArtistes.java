@@ -73,4 +73,9 @@ public class ModeleArtistes extends AbstractTableModel {
 		listeArtistes.set(indice, artiste);
 		fireTableRowsUpdated(indice, indice);
 	}
+	
+	public void supprimerArtiste(int indice) {
+		listeArtistes.remove( indice );
+		fireTableRowsUpdated(indice, indice);
+	}
 }

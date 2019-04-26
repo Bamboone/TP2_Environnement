@@ -73,6 +73,13 @@ public class ArtisteMouseListener extends MouseAdapter {
 			lblImage.setIcon(new ImageIcon(image));
 			activerChamps();
 		}
+		
+		if(e.getClickCount() == 2) {
+			btnModifier.setEnabled( true );
+			txtNom.setEnabled( true );
+			checkMembre.setEnabled( true );
+			btnRemplacer.setEnabled( true );
+		}
 	}
 	
 	public void activerChamps() {

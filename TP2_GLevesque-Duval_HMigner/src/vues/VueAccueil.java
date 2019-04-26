@@ -4,6 +4,9 @@ import javax.swing.JFrame;
 import controleur.*;
 
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPasswordField;
 
 import java.awt.Font;
@@ -18,6 +21,7 @@ public class VueAccueil extends JFrame {
 	private JPasswordField mdp;
 	private JButton valider;
 	private JButton quitter;
+	private JMenu menuAide;
 
 	public VueAccueil() {
 		super( "Connexion" );
@@ -67,6 +71,15 @@ public class VueAccueil extends JFrame {
 		valider.addActionListener( listener );
 		quitter.addActionListener( listener );
 		this.addWindowListener(listener);
+		
+		JMenuItem aide = new JMenuItem( "Aide en ligne" );
+		JMenuBar menuBar = new JMenuBar();
+		menuBar.setBounds(0, 0, 794, 21);
+		getContentPane().add(menuBar);
+		menuAide = new JMenu( "Aide" );
+		menuAide.add( aide );
+		menuBar.add( menuAide );
+		aide.addActionListener( new MenuListener(aide) );
 	}
 
 

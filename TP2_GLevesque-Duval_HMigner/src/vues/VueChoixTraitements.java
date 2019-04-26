@@ -4,12 +4,17 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.GridLayout;
 import javax.swing.SwingConstants;
 
 import controleur.ChoixListener;
+import controleur.MenuListener;
 
 public class VueChoixTraitements extends JFrame{
 
@@ -17,6 +22,7 @@ public class VueChoixTraitements extends JFrame{
 	private JButton gestionArtistes;
 	private JButton gestionAlbums;
 	private JButton quitter;
+	private JMenu menuAide;
 
 	public VueChoixTraitements() {
 		super("Menu");

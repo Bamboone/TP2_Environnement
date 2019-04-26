@@ -16,8 +16,8 @@ public class ArtisteWindowListener extends WindowAdapter {
 		int response = JOptionPane.showConfirmDialog( null, "Voulez-vous vraiment quitter?", "Confirmation",
 				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE );
 		if ( response == JOptionPane.YES_OPTION ) {
+			ControleConnexion.fermerConnexion();
 			System.exit( 0 );
-
 		}
 	}
 

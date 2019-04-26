@@ -98,4 +98,33 @@ public class GestionArtistes {
 			System.out.println(e.getMessage());
 		}
 	}
+	
+	public void modifierArtiste(Artiste artiste, int indice) {
+		connexion = ControleConnexion.getConnexion();
+		String requete = "UPDATE Artistes SET nom = ?, membre = ?, photo = ? WHERE id = ?";
+		try {
+			PreparedStatement statement = connexion.prepareStatement(requete);
+			statement.setString(1, artiste.getNom());
+			statement.setBoolean( 2, artiste.getMembre() );
+			statement.setString( 3, artiste.getPhoto() );
+			statement.setInt( 4, indice );
+			statement.executeUpdate();
+			statement.close();
+		}catch(SQLException e){
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void supprimerArtiste(int indice) {
+		connexion = ControleConnexion.getConnexion();
+		String requete = "DELETE FROM Artistes WHERE id = ?";
+		try {
+			PreparedStatement statement = connexion.prepareStatement(requete);
+			statement.setInt( 1, indice );
+			statement.executeUpdate();
+			statement.close();
+		}catch(SQLException e){
+			System.out.println(e.getMessage());
+		}
+	}
 }
