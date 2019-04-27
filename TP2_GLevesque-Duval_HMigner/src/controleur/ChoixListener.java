@@ -42,6 +42,7 @@ public class ChoixListener extends WindowAdapter implements ActionListener {
 			fenetre.dispose();
 			fen.setVisible( true );
 		}else if(e.getSource() == btnAlbums) {
+			ControleConnexion.connecter();
 			VueAlbums fen = new VueAlbums();
 			fenetre.dispose();
 			fen.setVisible( true );

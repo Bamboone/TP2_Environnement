@@ -12,9 +12,18 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 
 import controleur.MenuListener;
+import gestionDonnees.GestionAlbums;
+import gestionDonnees.GestionArtistes;
+import gestionDonnees.ModeleAlbums;
+import gestionDonnees.ModeleArtistes;
+import renderers.RendererGras;
+import renderers.RendererMembre;
 
 public class VueAlbums extends JFrame{
 
@@ -69,6 +78,15 @@ public class VueAlbums extends JFrame{
 		panneauAlbums.setBounds(10, 97, 764, 259);
 		getContentPane().add(panneauAlbums);
 		panneauAlbums.setLayout(null);
+		
+		GestionAlbums gestionnaire = new GestionAlbums();
+		ModeleAlbums modele = new ModeleAlbums(gestionnaire.getListeAlbumsArtiste());
+		JTable tableAlbums = new JTable(modele);
+		tableAlbums.setSelectionMode( ListSelectionModel.SINGLE_SELECTION );
+		tableAlbums.getColumnModel().getColumn(0).setCellRenderer(new RendererGras());
+		JScrollPane scroll = new JScrollPane(tableAlbums);
+		scroll.setBounds(155, 11, 388, 237);
+		panneauAlbums.add(scroll);
 		
 		JLabel lblAlbums = new JLabel("Albums");
 		lblAlbums.setFont(new Font("Comic Sans MS", Font.BOLD, 26));
