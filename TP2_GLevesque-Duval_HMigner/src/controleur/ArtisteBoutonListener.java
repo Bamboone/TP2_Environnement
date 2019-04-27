@@ -112,12 +112,16 @@ public class ArtisteBoutonListener implements ActionListener {
 		} else if ( e.getSource() == btnAjouter ) {
 			Artiste artiste = new Artiste( Integer.parseInt( fieldNumero.getText() ), fieldNom.getText(),
 					checkBoxMembre.isSelected(), imageModifiee ? imageTemp : "default.png" );
-			modele.ajouterDonnee( artiste );
-			modele.fireTableDataChanged();
-			gestionnaire.ajouterArtiste( artiste );
-			activerBoutons();
-			toggleInfos();
-			clearInfos();
+			if(modele.ajouterDonnee( artiste )) {
+				modele.fireTableDataChanged();
+				gestionnaire.ajouterArtiste( artiste );
+				activerBoutons();
+				toggleInfos();
+				clearInfos();
+			}else {
+				JOptionPane.showMessageDialog(null, "Erreur, l'artiste " + fieldNom.getText() + " existe déjà",
+						"Message d'erreur", JOptionPane.ERROR_MESSAGE);
+			}
 		} else if(e.getSource() == btnSupprimer) {
 			int indice = table.getSelectedRow() + 1;
 			modele.supprimerArtiste( indice - 1 );

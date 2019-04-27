@@ -43,4 +43,11 @@ public class Artiste {
 		return nom;
 		
 	}
+	
+	@Override
+	public boolean equals(Object objet) {
+		Artiste artiste = (Artiste)objet;
+		return nom.equalsIgnoreCase(artiste.getNom());
+		
+	}
 }

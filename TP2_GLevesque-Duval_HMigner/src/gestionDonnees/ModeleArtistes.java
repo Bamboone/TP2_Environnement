@@ -65,8 +65,14 @@ public class ModeleArtistes extends AbstractTableModel {
 		listeArtistes = donnees;
 	}
 	
-	public void ajouterDonnee(Artiste artiste) {
-		listeArtistes.add( artiste );
+	public boolean ajouterDonnee(Artiste artiste) {
+		boolean artisteManquant = false;
+		if(!listeArtistes.contains(artiste)) {
+			artisteManquant = true;
+			listeArtistes.add( artiste );
+		}
+		return artisteManquant;
+		
 	}
 	
 	public void modifierArtiste(int indice, Artiste artiste) {
