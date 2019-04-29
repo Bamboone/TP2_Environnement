@@ -52,4 +52,11 @@ public class Album {
 		return String.valueOf(anneeSortie) + " - " + titre;
 	}
 	
+	@Override
+	public boolean equals(Object objet) {
+		Album album = (Album)objet;
+		return titre.equalsIgnoreCase(album.getTitre());
+		
+	}
+	
 }

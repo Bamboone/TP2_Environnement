@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -17,13 +18,20 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
+import controleur.AlbumsBoutonListener;
+import controleur.AlbumsMouseListener;
+import controleur.AlbumsWindowListener;
+import controleur.ArtisteMouseListener;
 import controleur.MenuListener;
+import gestionDonnees.Album;
+import gestionDonnees.Artiste;
 import gestionDonnees.GestionAlbums;
 import gestionDonnees.GestionArtistes;
 import gestionDonnees.ModeleAlbums;
 import gestionDonnees.ModeleArtistes;
 import renderers.RendererGras;
 import renderers.RendererMembre;
+import javax.swing.JList;
 
 public class VueAlbums extends JFrame{
 
@@ -34,11 +42,16 @@ public class VueAlbums extends JFrame{
 	private JTextField fieldNumero;
 	private JTextField fieldTitre;
 	private JTextField fieldDate;
+	private JTextField fieldGenre;
+	private JTextField fieldArtiste;
+	private DefaultListModel<Artiste> donnees = new DefaultListModel<>();
 
 	public VueAlbums() {
 		super("Gestion des albums");
 		setSize(800, 600);
 		getContentPane().setLayout(null);
+		setResizable(false);
+		setLocationRelativeTo(null);
 		
 		JMenuItem aide = new JMenuItem( "Aide en ligne" );
 		JMenuBar menuBar = new JMenuBar();
@@ -163,13 +176,13 @@ public class VueAlbums extends JFrame{
 		labelDate.setBounds(12, 139, 107, 31);
 		panneauInfos.add(labelDate);
 		
-		fieldDate = new JTextField("JJ/MM/AAAA");
+		fieldDate = new JTextField("AAAA");
 		fieldDate.setForeground(Color.GRAY);
 		//fieldDate.setEnabled( false );
 		fieldDate.addFocusListener(new FocusListener() {
 		    @Override
 		    public void focusGained(FocusEvent e) {
-		        if (fieldDate.getText().equals("JJ/MM/AAAA")) {
+		        if (fieldDate.getText().equals("AAAA")) {
 		        	fieldDate.setText("");
 		        	fieldDate.setForeground(Color.BLACK);
 		        }
@@ -178,11 +191,60 @@ public class VueAlbums extends JFrame{
 		    public void focusLost(FocusEvent e) {
 		        if (fieldDate.getText().isEmpty()) {
 		        	fieldDate.setForeground(Color.GRAY);
-		        	fieldDate.setText("JJ/MM/AAAA");
+		        	fieldDate.setText("AAAA");
 		        }
 		    }
 		});
 		fieldDate.setBounds(129, 146, 183, 20);
 		panneauInfos.add( fieldDate );
+		
+		JLabel labelGenre = new JLabel("Genre");
+		labelGenre.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+		labelGenre.setBounds(365, 65, 57, 31);
+		panneauInfos.add(labelGenre);
+		
+		fieldGenre = new JTextField();
+		fieldGenre.setEnabled(false);
+		fieldGenre.setColumns(10);
+		fieldGenre.setBounds(421, 72, 237, 20);
+		panneauInfos.add(fieldGenre);
+		
+		
+		GestionArtistes gestion = new GestionArtistes();
+		for(Artiste artiste : gestion.getListeArtistes()) {
+			donnees.addElement(artiste);
+		}
+		JList<Artiste> listeArtistes = new JList<Artiste>();
+		//listeArtistes.setBounds(421, 108, 237, 65);
+		listeArtistes.setModel( donnees );
+		JScrollPane scrollArtiste = new JScrollPane(listeArtistes);
+		scrollArtiste.setBounds(421, 108, 237, 65);
+		panneauInfos.add( scrollArtiste );
+		
+		
+		JLabel labelArtistes = new JLabel("Artistes");
+		labelArtistes.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+		labelArtistes.setBounds(356, 110, 57, 31);
+		panneauInfos.add(labelArtistes);
+		
+		fieldArtiste = new JTextField();
+		fieldArtiste.setEnabled(false);
+		fieldArtiste.setColumns(10);
+		fieldArtiste.setBounds(421, 181, 237, 20);
+		panneauInfos.add(fieldArtiste);
+		
+		tableAlbums.addMouseListener(new AlbumsMouseListener(tableAlbums, fieldNumero, fieldTitre, fieldGenre, fieldDate, modele, imageAlbum, listeArtistes, btnAjouter, btnModifier, btnRemplacer, btnSupprimer));
+		addWindowListener(new AlbumsWindowListener());
+		AlbumsBoutonListener boutonListener = new AlbumsBoutonListener( btnRecherche,  btnRemplacer,  btnModifier,
+				 btnSupprimer,  btnNouveau,  btnAjouter,  btnQuitter,  fieldRecherche,
+				 modele,  tableAlbums,  gestionnaire,  imageAlbum,  fieldNumero,
+				 fieldTitre,  listeArtistes,  this, fieldGenre, fieldDate);
+		btnRecherche.addActionListener(boutonListener);
+		btnRemplacer.addActionListener(boutonListener);
+		btnNouveau.addActionListener( boutonListener );
+		btnQuitter.addActionListener( boutonListener );
+		btnAjouter.addActionListener( boutonListener );
+		btnSupprimer.addActionListener( boutonListener );
+		btnModifier.addActionListener( boutonListener );
 	}
 }

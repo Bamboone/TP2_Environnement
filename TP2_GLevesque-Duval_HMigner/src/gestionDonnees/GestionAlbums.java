@@ -79,5 +79,79 @@ public class GestionAlbums {
 		
 	}
 	
+	public ArrayList<Album> rechercheAlbum(String nomRecherche){
+		ArrayList<Album> liste = new ArrayList<Album>();
+		connexion = ControleConnexion.getConnexion();
+		String requete = "SELECT * FROM Albums WHERE nom LIKE ?";
+		try {
+			PreparedStatement statement = connexion.prepareStatement(requete);
+			statement.setString(1, "%" + nomRecherche + "%");
+			ResultSet jeuResultat = statement.executeQuery();
+			while(jeuResultat.next()) {
+				int id = jeuResultat.getInt( "id" );
+				String titre = jeuResultat.getString( "titre" );
+				String genre = jeuResultat.getString( "genre" );
+				int annee = jeuResultat.getInt( "annee_sortie" );
+				String photo = jeuResultat.getString( "couverture" );
+				int idArtiste = jeuResultat.getInt( "id_artiste" );
+				liste.add( new Album(id, titre, genre, annee, photo, idArtiste) );
+			}
+			statement.close();
+			jeuResultat.close();
+		}catch(SQLException e){
+			System.out.println(e.getMessage());
+		}
+		return liste;
+	}
+	
+	public void ajouterAlbum(Album album) {
+		connexion = ControleConnexion.getConnexion();
+		String requete = "INSERT INTO Albums (id, titre, genre, annee_sortie, couverture, id_artiste) VALUES (?, ?, ?, ?, ?, ?);";
+		try {
+			PreparedStatement statement = connexion.prepareStatement( requete );
+			statement.setInt( 1, album.getId());
+			statement.setString( 2, album.getTitre());
+			statement.setString( 3, album.getGenre());
+			statement.setInt( 4, album.getAnneeSortie() );
+			statement.setString( 5, album.getCouverture() );
+			statement.setInt( 6, album.getIdArtiste() );
+			statement.executeUpdate();
+			statement.close();
+		}catch(SQLException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void modifierAlbum(Album album, int indice) {
+		connexion = ControleConnexion.getConnexion();
+		String requete = "UPDATE Albums SET titre = ?, genre = ?, annee_sortie = ?, couverture = ?, id_artiste = ? WHERE id = ?";
+		try {
+			PreparedStatement statement = connexion.prepareStatement(requete);
+			statement.setString(1, album.getTitre());
+			statement.setString( 2, album.getGenre() );
+			statement.setInt( 3, album.getAnneeSortie() );
+			statement.setString( 4, album.getCouverture() );
+			statement.setInt( 5,  album.getIdArtiste() );
+			statement.setInt( 6,  indice );
+			statement.executeUpdate();
+			statement.close();
+		}catch(SQLException e){
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void supprimerAlbum(int indice) {
+		connexion = ControleConnexion.getConnexion();
+		String requete = "DELETE FROM Albums WHERE id = ?";
+		try {
+			PreparedStatement statement = connexion.prepareStatement(requete);
+			statement.setInt( 1, indice );
+			statement.executeUpdate();
+			statement.close();
+		}catch(SQLException e){
+			System.out.println(e.getMessage());
+		}
+	}
+	
 	
 }

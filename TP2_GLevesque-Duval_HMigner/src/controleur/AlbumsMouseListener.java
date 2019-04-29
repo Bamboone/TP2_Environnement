@@ -1,9 +1,9 @@
 package controleur;
 
 import java.awt.Image;
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -13,59 +13,57 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+
 import gestionDonnees.Album;
 import gestionDonnees.Artiste;
 import gestionDonnees.GestionAlbums;
+import gestionDonnees.GestionArtistes;
+import gestionDonnees.ModeleAlbums;
 import gestionDonnees.ModeleArtistes;
 
-public class ArtisteMouseListener extends MouseAdapter {
-
+public class AlbumsMouseListener extends MouseAdapter {
+	
 	private JTable table;
-	private JTextField txtId;
-	private JTextField txtNom;
-	private JCheckBox checkMembre;
-	private ModeleArtistes modele;
+	private JTextField fieldId;
+	private JTextField fieldTitre;
+	private ModeleAlbums modele;
 	private JLabel lblImage;
-	private DefaultListModel<Album> donnees = new DefaultListModel<>();
-	private JList<Album> listeAlbums;
+	private JList<Artiste> listeArtistes;
 	private JButton btnRemplacer;
 	private JButton btnModifier;
 	private JButton btnSupprimer;
 	private JButton btnAjouter;
-
-	public ArtisteMouseListener(JTable table, JTextField txtId, JTextField txtNom, JCheckBox checkMembre, ModeleArtistes modele, JLabel lblImage, JList<Album> listeAlbums, JButton btnAjouter, JButton btnModifier, JButton btnRemplacer, JButton btnSupprimer ) {
+	private JTextField fieldGenre;
+	private JTextField fieldAnnee;
+	
+	public AlbumsMouseListener(JTable table, JTextField txtId, JTextField txtNom, JTextField fieldGenre, JTextField fieldAnnee, ModeleAlbums modele, JLabel lblImage, JList<Artiste> listeArtistes, JButton btnAjouter, JButton btnModifier, JButton btnRemplacer, JButton btnSupprimer) {
 		this.table = table;
-		this.txtId = txtId;
-		this.txtNom = txtNom;
-		this.checkMembre = checkMembre;
+		this.fieldId = txtId;
+		this.fieldTitre = txtNom;
 		this.modele = modele;
 		this.lblImage = lblImage;
-		this.listeAlbums = listeAlbums;
-		this.btnAjouter =btnAjouter;
+		this.listeArtistes = listeArtistes;
+		this.btnAjouter = btnAjouter;
 		this.btnModifier = btnModifier;
 		this.btnRemplacer = btnRemplacer;
 		this.btnSupprimer = btnSupprimer;
-		listeAlbums.setModel( donnees );
+		this.fieldGenre = fieldGenre;
+		this.fieldAnnee = fieldAnnee;
 	}
 
-	public void mouseClicked(MouseEvent e) {
+	public void mouseClicked( MouseEvent e ) {
 		if(e.getSource() == table) {
 			int numLigne;
-			listeAlbums.clearSelection();
+			listeArtistes.clearSelection();
 			numLigne = table.getSelectedRow();
-			Artiste artiste = modele.getElement(numLigne);
-			txtId.setText(String.valueOf(artiste.getId()));
-			txtNom.setText(artiste.getNom());
-			checkMembre.setSelected(artiste.getMembre());
-			GestionAlbums gestion = new GestionAlbums(artiste.getId());
-			donnees.clear();
-			for(Album album : gestion.getListeAlbumsArtiste()) {
-				donnees.addElement(album);
-			}
-			listeAlbums.setModel(donnees);
+			Album album = modele.getElement(numLigne);
+			fieldId.setText(String.valueOf(album.getId()));
+			fieldTitre.setText(album.getTitre());
+			fieldGenre.setText( album.getGenre() );
+			fieldAnnee.setText( String.valueOf( album.getAnneeSortie() ));
 			Image image;
 			try {
-				image = new ImageIcon( ArtisteMouseListener.class.getResource( "../images/" + artiste.getPhoto() ) )
+				image = new ImageIcon( ArtisteMouseListener.class.getResource( "../images/" + album.getCouverture() ) )
 						.getImage().getScaledInstance( 135, 119, Image.SCALE_SMOOTH );
 			} catch ( Exception e2 ) {
 				image = new ImageIcon(ArtisteBoutonListener.class.getResource( "../images/default.png" )).getImage().getScaledInstance( 135, 119, Image.SCALE_SMOOTH );
@@ -75,13 +73,13 @@ public class ArtisteMouseListener extends MouseAdapter {
 			
 			if(e.getClickCount() == 2) {
 				btnModifier.setEnabled( true );
-				txtNom.setEnabled( true );
-				checkMembre.setEnabled( true );
+				fieldTitre.setEnabled( true );
 				btnRemplacer.setEnabled( true );
 			}
 		}
 		
 		
+
 	}
 	
 	public void activerChamps() {
@@ -89,7 +87,7 @@ public class ArtisteMouseListener extends MouseAdapter {
 		btnSupprimer.setEnabled( true );
 		btnAjouter.setEnabled( false );
 		btnRemplacer.setEnabled( false );
-		txtNom.setEnabled( false );
-		checkMembre.setEnabled( false );
+		fieldTitre.setEnabled( false );
 	}
+
 }

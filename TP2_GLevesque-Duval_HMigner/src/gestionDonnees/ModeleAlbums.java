@@ -54,4 +54,40 @@ public class ModeleAlbums extends AbstractTableModel {
 	public String getColumnName(int columnIndex) {
 		return lesTitres[columnIndex];
 	}
+	
+	public Album getElement(int numLigne) {
+
+		int id = (int) getValueAt(numLigne, 0);
+		String titre = (String) getValueAt(numLigne, 1);
+		String genre = (String) getValueAt(numLigne, 2);
+		int annee = (int) getValueAt(numLigne, 3);
+		String photo = (String) getValueAt(numLigne, 5);
+		int idArtiste = (int) getValueAt(numLigne, 4);
+
+		return new Album(id, titre, genre, annee, photo, idArtiste);
+	}
+
+	public void setDonnees(ArrayList<Album> donnees) {
+		listeAlbums = donnees;
+	}
+	
+	public boolean ajouterDonnee(Album album) {
+		boolean albumManquant = false;
+		if(!listeAlbums.contains(album)) {
+			albumManquant = true;
+			listeAlbums.add( album );
+		}
+		return albumManquant;
+		
+	}
+	
+	public void modifierAlbum(int indice, Album album) {
+		listeAlbums.set(indice, album);
+		fireTableRowsUpdated(indice, indice);
+	}
+	
+	public void supprimerAlbum(int indice) {
+		listeAlbums.remove( indice );
+		fireTableRowsUpdated(indice, indice);
+	}
 }
