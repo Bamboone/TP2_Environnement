@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -51,10 +52,11 @@ public class AlbumsBoutonListener implements ActionListener {
 	private JTextField fieldAnnee;
 	private JTextField fieldArtiste;
 
-	public AlbumsBoutonListener( JButton btnRecherche, JButton btnRemplacer, JButton btnModifier,
-			JButton btnSupprimer, JButton btnNouveau, JButton btnAjouter, JButton btnQuitter, JTextField txtRecherche,
-			ModeleAlbums modele, JTable table, GestionAlbums gestionnaire, JLabel lblImage, JTextField fieldNumero,
-			JTextField fieldTitre, JList<Artiste> listeArtistes, JFrame fenetre, JTextField fieldGenre, JTextField fieldAnnee, JTextField fieldArtiste ) {
+	public AlbumsBoutonListener( JButton btnRecherche, JButton btnRemplacer, JButton btnModifier, JButton btnSupprimer,
+			JButton btnNouveau, JButton btnAjouter, JButton btnQuitter, JTextField txtRecherche, ModeleAlbums modele,
+			JTable table, GestionAlbums gestionnaire, JLabel lblImage, JTextField fieldNumero, JTextField fieldTitre,
+			JList<Artiste> listeArtistes, JFrame fenetre, JTextField fieldGenre, JTextField fieldAnnee,
+			JTextField fieldArtiste ) {
 		this.btnRecherche = btnRecherche;
 		this.modele = modele;
 		this.gestionnaire = gestionnaire;
@@ -80,10 +82,16 @@ public class AlbumsBoutonListener implements ActionListener {
 	public void actionPerformed( ActionEvent e ) {
 
 		if ( e.getSource() == btnRecherche ) {
-
-			modele.setDonnees( gestionnaire.rechercheAlbum( txtRecherche.getText() ) );
-			modele.fireTableDataChanged();
-		clearInfos();
+			ArrayList<Album> liste = gestionnaire.rechercheAlbum( txtRecherche.getText() );
+			if(liste.isEmpty() && !txtRecherche.getText().equals( "" )) {
+				JOptionPane.showMessageDialog( null,
+						"Erreur, aucun album correspond à " + txtRecherche.getText(),
+						"Message d'erreur", JOptionPane.ERROR_MESSAGE );
+			}else {
+				modele.setDonnees( liste );
+				modele.fireTableDataChanged();
+				clearInfos();
+			}
 		} else if ( e.getSource() == btnRemplacer ) {
 			JFileChooser choixFichier = new JFileChooser( System.getProperty( "user.dir" ) + "\\src\\images" );
 			if ( choixFichier.showOpenDialog( null ) == JFileChooser.APPROVE_OPTION ) {
@@ -105,21 +113,21 @@ public class AlbumsBoutonListener implements ActionListener {
 				ControleConnexion.fermerConnexion();
 			}
 		} else if ( e.getSource() == btnNouveau ) {
-		
-				btnModifier.setEnabled( false );
+
+			btnModifier.setEnabled( false );
 			activerInfos();
-			
+
 			clearInfos();
-			fieldNumero.setText( Integer.toString( modele.getRowCount() + 1 ) );
-			Image image = new ImageIcon( ArtisteBoutonListener.class.getResource( "../images/" + "default.png" ) ).getImage()
-					.getScaledInstance( 135, 119, Image.SCALE_SMOOTH );
+			fieldNumero.setText( Integer.toString( (int) modele.getValueAt( modele.getRowCount() - 1, 0 ) + 1 ) );
+			Image image = new ImageIcon( ArtisteBoutonListener.class.getResource( "../images/" + "default.png" ) )
+					.getImage().getScaledInstance( 135, 119, Image.SCALE_SMOOTH );
 			lblImage.setIcon( new ImageIcon( image ) );
 			imageModifiee = false;
 			btnAjouter.setEnabled( true );
 			btnRemplacer.setEnabled( true );
 		} else if ( e.getSource() == btnAjouter ) {
 			if ( validerAnnee() ) {
-				if(listeArtistes.getSelectedIndex() != -1) {
+				if ( listeArtistes.getSelectedIndex() != -1 ) {
 					Album album = new Album( Integer.parseInt( fieldNumero.getText() ), fieldTitre.getText(),
 							fieldGenre.getText(), Integer.parseInt( fieldAnnee.getText() ),
 							imageModifiee ? imageTemp : "default.png", listeArtistes.getSelectedIndex() + 1 );
@@ -131,27 +139,32 @@ public class AlbumsBoutonListener implements ActionListener {
 						clearInfos();
 					} else {
 						JOptionPane.showMessageDialog( null,
-								"Erreur, l'album au titre: " + fieldTitre.getText() + ", existe déjà", "Message d'erreur",
-								JOptionPane.ERROR_MESSAGE );
-					} 
-				}else {
-					JOptionPane.showMessageDialog( null,
-							"Erreur, veuillez sélectionner un artiste", "Message d'erreur",
-							JOptionPane.ERROR_MESSAGE );
+								"Erreur, l'album au titre: " + fieldTitre.getText() + ", existe déjà",
+								"Message d'erreur", JOptionPane.ERROR_MESSAGE );
+					}
+				} else {
+					JOptionPane.showMessageDialog( null, "Erreur, veuillez sélectionner un artiste",
+							"Message d'erreur", JOptionPane.ERROR_MESSAGE );
 				}
-				
+
 			}
-			
-		} else if(e.getSource() == btnSupprimer) {
-			int indice = table.getSelectedRow() + 1;
-			modele.supprimerAlbum( indice - 1 );
-			modele.fireTableDataChanged();
-			gestionnaire.supprimerAlbum(indice);
-			desactiverBoutons();
-			clearInfos();
-		} else if(e.getSource() == btnModifier) {
+
+		} else if ( e.getSource() == btnSupprimer ) {
+
+			int response = JOptionPane.showConfirmDialog( null, "Voulez-vous supprimer cet album?", "Confirmation",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE );
+			if ( response == JOptionPane.YES_OPTION ) {
+				int id = (int) modele.getValueAt( table.getSelectedRow(), 0 );
+				modele.supprimerAlbum( table.getSelectedRow() );
+				modele.fireTableDataChanged();
+				gestionnaire.supprimerAlbum( id );
+				desactiverBoutons();
+				clearInfos();
+			}
+
+		} else if ( e.getSource() == btnModifier ) {
 			if ( validerAnnee() ) {
-				int indice = table.getSelectedRow() + 1;
+				int indice = (int) modele.getValueAt( table.getSelectedRow(), 0 );
 				String titre = fieldTitre.getText();
 				int annee = Integer.parseInt( fieldAnnee.getText() );
 				String genre = fieldGenre.getText();
@@ -159,7 +172,7 @@ public class AlbumsBoutonListener implements ActionListener {
 				int artiste = listeArtistes.getSelectedIndex() + 1;
 				Album album = new Album( Integer.parseInt( fieldNumero.getText() ), titre, genre, annee, photo,
 						artiste );
-				modele.modifierAlbum( indice - 1, album );
+				modele.modifierAlbum( table.getSelectedRow(), album );
 				modele.fireTableDataChanged();
 				gestionnaire.modifierAlbum( album, indice );
 				desactiverBoutons();
@@ -171,15 +184,15 @@ public class AlbumsBoutonListener implements ActionListener {
 	}
 
 	public void activerInfos() {
-			fieldTitre.setEnabled( true );
-			fieldTitre.setEnabled( true );
-			fieldAnnee.setEnabled( true );
-			fieldGenre.setEnabled( true );
-			listeArtistes.setEnabled( true );
+		fieldTitre.setEnabled( true );
+		fieldTitre.setEnabled( true );
+		fieldAnnee.setEnabled( true );
+		fieldGenre.setEnabled( true );
+		listeArtistes.setEnabled( true );
 		table.clearSelection();
 		btnSupprimer.setEnabled( false );
 	}
-	
+
 	public void desactiverInfos() {
 		fieldTitre.setEnabled( false );
 		fieldTitre.setEnabled( false );
@@ -189,14 +202,14 @@ public class AlbumsBoutonListener implements ActionListener {
 		table.clearSelection();
 		btnSupprimer.setEnabled( false );
 	}
-	
+
 	public void desactiverBoutons() {
 		btnModifier.setEnabled( false );
 		btnSupprimer.setEnabled( false );
 		btnAjouter.setEnabled( false );
 		btnRemplacer.setEnabled( false );
 	}
-	
+
 	public void clearInfos() {
 		lblImage.setIcon( null );
 		fieldNumero.setText( "" );
@@ -207,19 +220,19 @@ public class AlbumsBoutonListener implements ActionListener {
 		listeArtistes.clearSelection();
 		btnSupprimer.setEnabled( false );
 	}
-	
+
 	public boolean validerAnnee() {
 		boolean valide = false;
 		try {
-			if(fieldAnnee.getText().length() == 4 && Integer.parseInt( fieldAnnee.getText() ) > 0) {
+			if ( fieldAnnee.getText().length() == 4 && Integer.parseInt( fieldAnnee.getText() ) > 0 ) {
 				valide = true;
 			}
-		}catch(NumberFormatException ex) {
+		} catch ( NumberFormatException ex ) {
 			valide = false;
 		}
-		if(!valide) {
-			JOptionPane.showMessageDialog( null, "Erreur, l'année est invalide",
-					"Message d'erreur", JOptionPane.ERROR_MESSAGE );
+		if ( !valide ) {
+			JOptionPane.showMessageDialog( null, "Erreur, l'année est invalide", "Message d'erreur",
+					JOptionPane.ERROR_MESSAGE );
 		}
 		return valide;
 	}
