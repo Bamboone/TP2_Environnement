@@ -26,7 +26,7 @@ public class VueAccueil extends JFrame {
 	public VueAccueil() {
 		super( "Connexion" );
 		setSize( 400, 300 );
-		setResizable(false);
+		setResizable( false );
 		setDefaultCloseOperation( JFrame.DO_NOTHING_ON_CLOSE );
 		setLocationRelativeTo( null );
 		getContentPane().setLayout( null );
@@ -70,19 +70,16 @@ public class VueAccueil extends JFrame {
 		AccueilListener listener = new AccueilListener( valider, quitter, nomUtilisateur, mdp, this );
 		valider.addActionListener( listener );
 		quitter.addActionListener( listener );
-		this.addWindowListener(listener);
-		
+		this.addWindowListener( listener );
+
 		JMenuItem aide = new JMenuItem( "Aide en ligne" );
 		JMenuBar menuBar = new JMenuBar();
-		menuBar.setBounds(0, 0, 794, 21);
-		getContentPane().add(menuBar);
+		menuBar.setBounds( 0, 0, 794, 21 );
+		getContentPane().add( menuBar );
 		menuAide = new JMenu( "Aide" );
 		menuAide.add( aide );
 		menuBar.add( menuAide );
-		aide.addActionListener( new MenuListener(aide) );
+		aide.addActionListener( new MenuListener( aide ) );
 	}
-
-
-	
 
 }

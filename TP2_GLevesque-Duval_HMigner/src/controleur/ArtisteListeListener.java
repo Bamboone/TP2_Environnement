@@ -23,15 +23,15 @@ public class ArtisteListeListener implements ListSelectionListener {
 	@Override
 	public void valueChanged( ListSelectionEvent e ) {
 
-		if(listeAlbums.getSelectedValue() != null) {
+		if ( listeAlbums.getSelectedValue() != null ) {
 			Image image = new ImageIcon( ArtisteMouseListener.class
 					.getResource( "../images/" + listeAlbums.getSelectedValue().getCouverture() ) ).getImage()
 							.getScaledInstance( 135, 119, Image.SCALE_SMOOTH );
-			lblImage.setIcon(new ImageIcon( image ));
-		}else {
+			lblImage.setIcon( new ImageIcon( image ) );
+		} else {
 			lblImage.setIcon( null );
 		}
-		
+
 	}
 
 }

@@ -46,7 +46,7 @@ public class GestionArtistes {
 
 	}
 
-	public String obtenirNomArtiste(int idArtiste) {
+	public String obtenirNomArtiste( int idArtiste ) {
 
 		connexion = ControleConnexion.getConnexion();
 		String requete = "SELECT nom FROM Artistes where id = ?";

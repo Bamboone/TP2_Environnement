@@ -1,15 +1,13 @@
 package controleur;
 
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
-
-import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -17,15 +15,10 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-
-import org.sqlite.util.StringUtils;
-
 import gestionDonnees.Album;
 import gestionDonnees.Artiste;
 import gestionDonnees.GestionAlbums;
-import gestionDonnees.GestionArtistes;
 import gestionDonnees.ModeleAlbums;
-import gestionDonnees.ModeleArtistes;
 import vues.VueChoixTraitements;
 
 public class AlbumsBoutonListener implements ActionListener {
@@ -87,6 +80,7 @@ public class AlbumsBoutonListener implements ActionListener {
 				JOptionPane.showMessageDialog( null,
 						"Erreur, aucun album correspond à " + txtRecherche.getText(),
 						"Message d'erreur", JOptionPane.ERROR_MESSAGE );
+				txtRecherche.setText( "" );
 			}else {
 				modele.setDonnees( liste );
 				modele.fireTableDataChanged();
@@ -125,28 +119,35 @@ public class AlbumsBoutonListener implements ActionListener {
 			imageModifiee = false;
 			btnAjouter.setEnabled( true );
 			btnRemplacer.setEnabled( true );
+			fieldAnnee.setForeground(Color.GRAY);
+        	fieldAnnee.setText("AAAA");
 		} else if ( e.getSource() == btnAjouter ) {
-			if ( validerAnnee() ) {
-				if ( listeArtistes.getSelectedIndex() != -1 ) {
-					Album album = new Album( Integer.parseInt( fieldNumero.getText() ), fieldTitre.getText(),
-							fieldGenre.getText(), Integer.parseInt( fieldAnnee.getText() ),
-							imageModifiee ? imageTemp : "default.png", listeArtistes.getSelectedIndex() + 1 );
-					if ( modele.ajouterDonnee( album ) ) {
-						modele.fireTableDataChanged();
-						gestionnaire.ajouterAlbum( album );
-						desactiverBoutons();
-						desactiverInfos();
-						clearInfos();
+			if ( !fieldTitre.getText().trim().equals( "" ) ) {
+				if ( validerAnnee() ) {
+					if ( listeArtistes.getSelectedIndex() != -1 ) {
+						Album album = new Album( Integer.parseInt( fieldNumero.getText() ), fieldTitre.getText(),
+								fieldGenre.getText(), Integer.parseInt( fieldAnnee.getText() ),
+								imageModifiee ? imageTemp : "default.png", listeArtistes.getSelectedIndex() + 1 );
+						if ( modele.ajouterDonnee( album ) ) {
+							modele.fireTableDataChanged();
+							gestionnaire.ajouterAlbum( album );
+							desactiverBoutons();
+							desactiverInfos();
+							clearInfos();
+						} else {
+							JOptionPane.showMessageDialog( null,
+									"Erreur, l'album au titre: " + fieldTitre.getText() + ", existe déjà",
+									"Message d'erreur", JOptionPane.ERROR_MESSAGE );
+						}
 					} else {
-						JOptionPane.showMessageDialog( null,
-								"Erreur, l'album au titre: " + fieldTitre.getText() + ", existe déjà",
+						JOptionPane.showMessageDialog( null, "Erreur, veuillez sélectionner un artiste",
 								"Message d'erreur", JOptionPane.ERROR_MESSAGE );
 					}
-				} else {
-					JOptionPane.showMessageDialog( null, "Erreur, veuillez sélectionner un artiste",
-							"Message d'erreur", JOptionPane.ERROR_MESSAGE );
-				}
 
+				} 
+			}else {
+				JOptionPane.showMessageDialog( null, "Erreur, impossible d'ajouter un album sans titre",
+						"Message d'erreur", JOptionPane.ERROR_MESSAGE );
 			}
 
 		} else if ( e.getSource() == btnSupprimer ) {
@@ -163,18 +164,22 @@ public class AlbumsBoutonListener implements ActionListener {
 			}
 
 		} else if ( e.getSource() == btnModifier ) {
+			
 			if ( validerAnnee() ) {
-				int indice = (int) modele.getValueAt( table.getSelectedRow(), 0 );
+				
+				int id = (int) modele.getValueAt( table.getSelectedRow(), 0 );
+				
 				String titre = fieldTitre.getText();
 				int annee = Integer.parseInt( fieldAnnee.getText() );
 				String genre = fieldGenre.getText();
-				String photo = imageModifiee ? imageTemp : (String) modele.getValueAt( indice - 1, 5 );
+				String photo = imageModifiee ? imageTemp : (String) modele.getValueAt( table.getSelectedRow(), 5 );
 				int artiste = listeArtistes.getSelectedIndex() + 1;
-				Album album = new Album( Integer.parseInt( fieldNumero.getText() ), titre, genre, annee, photo,
+				Album album = new Album( id , titre, genre, annee, photo,
 						artiste );
+				
 				modele.modifierAlbum( table.getSelectedRow(), album );
 				modele.fireTableDataChanged();
-				gestionnaire.modifierAlbum( album, indice );
+				gestionnaire.modifierAlbum( album, id );
 				desactiverBoutons();
 				desactiverInfos();
 				clearInfos();

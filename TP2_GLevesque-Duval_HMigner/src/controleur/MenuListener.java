@@ -8,29 +8,26 @@ import java.io.IOException;
 
 import javax.swing.JMenuItem;
 
-public class MenuListener implements ActionListener{
+public class MenuListener implements ActionListener {
 
 	private JMenuItem aide;
-	
-	public MenuListener(JMenuItem aide) {
+
+	public MenuListener( JMenuItem aide ) {
 		this.aide = aide;
 	}
-	
+
 	@Override
 	public void actionPerformed( ActionEvent e ) {
 
-		if(e.getSource() == aide) {
+		if ( e.getSource() == aide ) {
 			try {
 				File fichier = new File( System.getProperty( "user.dir" ) + "\\aideEnLigne.chm" );
 				Desktop.getDesktop().open( fichier );
-			}catch(IOException ex) {
+			} catch ( IOException ex ) {
 				System.out.println( ex.getMessage() );
 			}
 		}
-		
-		
+
 	}
 
-	
-	
 }

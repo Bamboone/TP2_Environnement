@@ -34,7 +34,7 @@ public class ModeleAlbums extends AbstractTableModel {
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		switch (columnIndex) {
 		case 0:
-			return listeAlbums.get(rowIndex).getId();
+			return listeAlbums.get( rowIndex ).getId();
 		case 1:
 			return listeAlbums.get(rowIndex).getTitre();
 		case 2:

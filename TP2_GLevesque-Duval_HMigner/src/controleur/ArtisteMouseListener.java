@@ -33,7 +33,9 @@ public class ArtisteMouseListener extends MouseAdapter {
 	private JButton btnSupprimer;
 	private JButton btnAjouter;
 
-	public ArtisteMouseListener(JTable table, JTextField txtId, JTextField txtNom, JCheckBox checkMembre, ModeleArtistes modele, JLabel lblImage, JList<Album> listeAlbums, JButton btnAjouter, JButton btnModifier, JButton btnRemplacer, JButton btnSupprimer ) {
+	public ArtisteMouseListener( JTable table, JTextField txtId, JTextField txtNom, JCheckBox checkMembre,
+			ModeleArtistes modele, JLabel lblImage, JList<Album> listeAlbums, JButton btnAjouter, JButton btnModifier,
+			JButton btnRemplacer, JButton btnSupprimer ) {
 		this.table = table;
 		this.txtId = txtId;
 		this.txtNom = txtNom;
@@ -41,49 +43,51 @@ public class ArtisteMouseListener extends MouseAdapter {
 		this.modele = modele;
 		this.lblImage = lblImage;
 		this.listeAlbums = listeAlbums;
-		this.btnAjouter =btnAjouter;
+		this.btnAjouter = btnAjouter;
 		this.btnModifier = btnModifier;
 		this.btnRemplacer = btnRemplacer;
 		this.btnSupprimer = btnSupprimer;
 		listeAlbums.setModel( donnees );
 	}
 
-	public void mouseClicked(MouseEvent e) {
-		if(e.getSource() == table) {
+	public void mouseClicked( MouseEvent e ) {
+		if ( e.getSource() == table ) {
 			int numLigne;
 			listeAlbums.clearSelection();
 			numLigne = table.getSelectedRow();
-			Artiste artiste = modele.getElement(numLigne);
-			txtId.setText(String.valueOf(artiste.getId()));
-			txtNom.setText(artiste.getNom());
-			checkMembre.setSelected(artiste.getMembre());
-			GestionAlbums gestion = new GestionAlbums(artiste.getId());
+			Artiste artiste = modele.getElement( numLigne );
+			txtId.setText( String.valueOf( artiste.getId() ) );
+			txtNom.setText( artiste.getNom() );
+			checkMembre.setSelected( artiste.getMembre() );
+			GestionAlbums gestion = new GestionAlbums( artiste.getId() );
+
 			donnees.clear();
-			for(Album album : gestion.getListeAlbumsArtiste()) {
-				donnees.addElement(album);
+			for ( Album album : gestion.getListeAlbumsArtiste() ) {
+				donnees.addElement( album );
 			}
-			listeAlbums.setModel(donnees);
+			listeAlbums.setModel( donnees );
+
 			Image image;
 			try {
 				image = new ImageIcon( ArtisteMouseListener.class.getResource( "../images/" + artiste.getPhoto() ) )
 						.getImage().getScaledInstance( 135, 119, Image.SCALE_SMOOTH );
 			} catch ( Exception e2 ) {
-				image = new ImageIcon(ArtisteBoutonListener.class.getResource( "../images/default.png" )).getImage().getScaledInstance( 135, 119, Image.SCALE_SMOOTH );
+				image = new ImageIcon( ArtisteBoutonListener.class.getResource( "../images/default.png" ) ).getImage()
+						.getScaledInstance( 135, 119, Image.SCALE_SMOOTH );
 			}
-			lblImage.setIcon(new ImageIcon(image));
+			lblImage.setIcon( new ImageIcon( image ) );
 			activerChamps();
-			
-			if(e.getClickCount() == 2) {
+
+			if ( e.getClickCount() == 2 ) {
 				btnModifier.setEnabled( true );
 				txtNom.setEnabled( true );
 				checkMembre.setEnabled( true );
 				btnRemplacer.setEnabled( true );
 			}
 		}
-		
-		
+
 	}
-	
+
 	public void activerChamps() {
 		btnModifier.setEnabled( false );
 		btnSupprimer.setEnabled( true );

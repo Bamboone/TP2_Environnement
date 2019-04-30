@@ -76,19 +76,21 @@ public class ArtisteBoutonListener implements ActionListener {
 
 		if ( e.getSource() == btnRecherche ) {
 			ArrayList<Artiste> liste = gestionnaire.rechercheArtiste( txtRecherche.getText() );
-			
-			if(liste.isEmpty() && !txtRecherche.getText().equals( "" )) {
-				JOptionPane.showMessageDialog( null,
-						"Erreur, aucun artiste correspond à " + txtRecherche.getText(),
+
+			if ( liste.isEmpty() && !txtRecherche.getText().equals( "" ) ) {
+				JOptionPane.showMessageDialog( null, "Erreur, aucun artiste correspond à " + txtRecherche.getText(),
 						"Message d'erreur", JOptionPane.ERROR_MESSAGE );
-			}else {
+				txtRecherche.setText( "" );
+			} else {
 				modele.setDonnees( liste );
 				modele.fireTableDataChanged();
 				clearInfos();
 			}
-			
+
 		} else if ( e.getSource() == btnRemplacer ) {
+
 			JFileChooser choixFichier = new JFileChooser( System.getProperty( "user.dir" ) + "\\src\\images" );
+
 			if ( choixFichier.showOpenDialog( null ) == JFileChooser.APPROVE_OPTION ) {
 				Image image;
 				File f = choixFichier.getSelectedFile();
@@ -98,7 +100,9 @@ public class ArtisteBoutonListener implements ActionListener {
 				lblImage.setIcon( new ImageIcon( image ) );
 				imageModifiee = true;
 			}
+
 		} else if ( e.getSource() == btnQuitter ) {
+
 			int response = JOptionPane.showConfirmDialog( null, "Voulez-vous vraiment quitter?", "Confirmation",
 					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE );
 			if ( response == JOptionPane.YES_OPTION ) {
@@ -107,7 +111,9 @@ public class ArtisteBoutonListener implements ActionListener {
 				accueil.setVisible( true );
 				ControleConnexion.fermerConnexion();
 			}
+
 		} else if ( e.getSource() == btnNouveau ) {
+
 			btnModifier.setEnabled( false );
 			activerInfos();
 			clearInfos();
@@ -118,24 +124,39 @@ public class ArtisteBoutonListener implements ActionListener {
 			imageModifiee = false;
 			btnAjouter.setEnabled( true );
 			btnRemplacer.setEnabled( true );
+
 		} else if ( e.getSource() == btnAjouter ) {
-			Artiste artiste = new Artiste( Integer.parseInt( fieldNumero.getText() ), fieldNom.getText(),
-					checkBoxMembre.isSelected(), imageModifiee ? imageTemp : "default.png" );
-			if ( modele.ajouterDonnee( artiste ) ) {
-				modele.fireTableDataChanged();
-				gestionnaire.ajouterArtiste( artiste );
-				desactiverBoutons();
-				desactiverInfos();
-				clearInfos();
+
+			if ( !fieldNom.getText().trim().equals( "" ) ) {
+
+				Artiste artiste = new Artiste( Integer.parseInt( fieldNumero.getText() ), fieldNom.getText(),
+						checkBoxMembre.isSelected(), imageModifiee ? imageTemp : "default.png" );
+
+				if ( modele.ajouterDonnee( artiste ) ) {
+					modele.fireTableDataChanged();
+					gestionnaire.ajouterArtiste( artiste );
+					desactiverBoutons();
+					desactiverInfos();
+					clearInfos();
+				} else {
+					JOptionPane.showMessageDialog( null, "Erreur, l'artiste " + fieldNom.getText() + " existe déjà",
+							"Message d'erreur", JOptionPane.ERROR_MESSAGE );
+				}
+				
 			} else {
-				JOptionPane.showMessageDialog( null, "Erreur, l'artiste " + fieldNom.getText() + " existe déjà",
+				JOptionPane.showMessageDialog( null, "Erreur, impossible d'ajouter un artiste sans nom",
 						"Message d'erreur", JOptionPane.ERROR_MESSAGE );
 			}
+
 		} else if ( e.getSource() == btnSupprimer ) {
+
 			int id = (int) modele.getValueAt( table.getSelectedRow(), 0 );
+
 			if ( new GestionAlbums( id ).getListeAlbumsArtiste().isEmpty() ) {
+
 				int response = JOptionPane.showConfirmDialog( null, "Voulez-vous supprimer cet artiste?",
 						"Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE );
+
 				if ( response == JOptionPane.YES_OPTION ) {
 					modele.supprimerArtiste( table.getSelectedRow() );
 					modele.fireTableDataChanged();
@@ -143,6 +164,7 @@ public class ArtisteBoutonListener implements ActionListener {
 					desactiverBoutons();
 					clearInfos();
 				}
+				
 			} else {
 				JOptionPane.showMessageDialog( null,
 						"Erreur, impossible de supprimer un artiste qui contient au moins un album",
@@ -150,14 +172,17 @@ public class ArtisteBoutonListener implements ActionListener {
 			}
 
 		} else if ( e.getSource() == btnModifier ) {
-			int indice = (int) modele.getValueAt( table.getSelectedRow(), 0 );
+
+			int id = (int) modele.getValueAt( table.getSelectedRow(), 0 );
 			String nom = fieldNom.getText();
 			boolean membre = checkBoxMembre.isSelected();
-			String photo = imageModifiee ? imageTemp : (String) modele.getValueAt( indice - 1, 3 );
-			Artiste artiste = new Artiste( Integer.parseInt( fieldNumero.getText() ), nom, membre, photo );
+			String photo = imageModifiee ? imageTemp : (String) modele.getValueAt( table.getSelectedRow() - 1, 3 );
+
+			Artiste artiste = new Artiste( id, nom, membre, photo );
+
 			modele.modifierArtiste( table.getSelectedRow(), artiste );
 			modele.fireTableDataChanged();
-			gestionnaire.modifierArtiste( artiste, indice );
+			gestionnaire.modifierArtiste( artiste, id );
 			desactiverBoutons();
 			desactiverInfos();
 			clearInfos();
