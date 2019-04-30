@@ -46,7 +46,7 @@ public class GestionAlbums {
 				statement.close();
 				jeuResultat.close();
 		} catch ( SQLException e ) {
-			System.out.println( "Probleme de connexion" + e.getMessage());
+			System.out.println( e.getMessage());
 		}
 
 		return liste;
@@ -72,20 +72,20 @@ public class GestionAlbums {
 				statement.close();
 				jeuResultat.close();
 		} catch ( SQLException e ) {
-			System.out.println( "Probleme de connexion" + e.getMessage());
+			System.out.println( e.getMessage());
 		}
 
 		return liste;
 		
 	}
 	
-	public ArrayList<Album> rechercheAlbum(String nomRecherche){
+	public ArrayList<Album> rechercheAlbum(String titreRecherche){
 		ArrayList<Album> liste = new ArrayList<Album>();
 		connexion = ControleConnexion.getConnexion();
-		String requete = "SELECT * FROM Albums WHERE nom LIKE ?";
+		String requete = "SELECT * FROM Albums WHERE titre LIKE ?";
 		try {
 			PreparedStatement statement = connexion.prepareStatement(requete);
-			statement.setString(1, "%" + nomRecherche + "%");
+			statement.setString(1, "%" + titreRecherche + "%");
 			ResultSet jeuResultat = statement.executeQuery();
 			while(jeuResultat.next()) {
 				int id = jeuResultat.getInt( "id" );

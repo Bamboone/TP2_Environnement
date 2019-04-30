@@ -178,7 +178,7 @@ public class VueAlbums extends JFrame{
 		
 		fieldDate = new JTextField("AAAA");
 		fieldDate.setForeground(Color.GRAY);
-		//fieldDate.setEnabled( false );
+		fieldDate.setEnabled( false );
 		fieldDate.addFocusListener(new FocusListener() {
 		    @Override
 		    public void focusGained(FocusEvent e) {
@@ -215,8 +215,8 @@ public class VueAlbums extends JFrame{
 			donnees.addElement(artiste);
 		}
 		JList<Artiste> listeArtistes = new JList<Artiste>();
-		//listeArtistes.setBounds(421, 108, 237, 65);
 		listeArtistes.setModel( donnees );
+		listeArtistes.setEnabled( false );
 		JScrollPane scrollArtiste = new JScrollPane(listeArtistes);
 		scrollArtiste.setBounds(421, 108, 237, 65);
 		panneauInfos.add( scrollArtiste );
@@ -233,12 +233,14 @@ public class VueAlbums extends JFrame{
 		fieldArtiste.setBounds(421, 181, 237, 20);
 		panneauInfos.add(fieldArtiste);
 		
-		tableAlbums.addMouseListener(new AlbumsMouseListener(tableAlbums, fieldNumero, fieldTitre, fieldGenre, fieldDate, modele, imageAlbum, listeArtistes, btnAjouter, btnModifier, btnRemplacer, btnSupprimer));
+		AlbumsMouseListener mouseListener = new AlbumsMouseListener(tableAlbums, fieldNumero, fieldTitre, fieldGenre, fieldDate, fieldArtiste, modele, imageAlbum, listeArtistes, btnAjouter, btnModifier, btnRemplacer, btnSupprimer);
+		tableAlbums.addMouseListener(mouseListener);
+		listeArtistes.addMouseListener( mouseListener );
 		addWindowListener(new AlbumsWindowListener());
 		AlbumsBoutonListener boutonListener = new AlbumsBoutonListener( btnRecherche,  btnRemplacer,  btnModifier,
 				 btnSupprimer,  btnNouveau,  btnAjouter,  btnQuitter,  fieldRecherche,
 				 modele,  tableAlbums,  gestionnaire,  imageAlbum,  fieldNumero,
-				 fieldTitre,  listeArtistes,  this, fieldGenre, fieldDate);
+				 fieldTitre,  listeArtistes,  this, fieldGenre, fieldDate, fieldArtiste);
 		btnRecherche.addActionListener(boutonListener);
 		btnRemplacer.addActionListener(boutonListener);
 		btnNouveau.addActionListener( boutonListener );

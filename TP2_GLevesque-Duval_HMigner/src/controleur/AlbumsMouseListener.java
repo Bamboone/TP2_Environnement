@@ -35,8 +35,9 @@ public class AlbumsMouseListener extends MouseAdapter {
 	private JButton btnAjouter;
 	private JTextField fieldGenre;
 	private JTextField fieldAnnee;
+	private JTextField fieldArtiste;
 	
-	public AlbumsMouseListener(JTable table, JTextField txtId, JTextField txtNom, JTextField fieldGenre, JTextField fieldAnnee, ModeleAlbums modele, JLabel lblImage, JList<Artiste> listeArtistes, JButton btnAjouter, JButton btnModifier, JButton btnRemplacer, JButton btnSupprimer) {
+	public AlbumsMouseListener(JTable table, JTextField txtId, JTextField txtNom, JTextField fieldGenre, JTextField fieldAnnee, JTextField fieldArtiste, ModeleAlbums modele, JLabel lblImage, JList<Artiste> listeArtistes, JButton btnAjouter, JButton btnModifier, JButton btnRemplacer, JButton btnSupprimer) {
 		this.table = table;
 		this.fieldId = txtId;
 		this.fieldTitre = txtNom;
@@ -49,6 +50,7 @@ public class AlbumsMouseListener extends MouseAdapter {
 		this.btnSupprimer = btnSupprimer;
 		this.fieldGenre = fieldGenre;
 		this.fieldAnnee = fieldAnnee;
+		this.fieldArtiste = fieldArtiste;
 	}
 
 	public void mouseClicked( MouseEvent e ) {
@@ -61,6 +63,7 @@ public class AlbumsMouseListener extends MouseAdapter {
 			fieldTitre.setText(album.getTitre());
 			fieldGenre.setText( album.getGenre() );
 			fieldAnnee.setText( String.valueOf( album.getAnneeSortie() ));
+			fieldArtiste.setText( new GestionArtistes().obtenirNomArtiste( album.getIdArtiste() ) );
 			Image image;
 			try {
 				image = new ImageIcon( ArtisteMouseListener.class.getResource( "../images/" + album.getCouverture() ) )
@@ -74,7 +77,15 @@ public class AlbumsMouseListener extends MouseAdapter {
 			if(e.getClickCount() == 2) {
 				btnModifier.setEnabled( true );
 				fieldTitre.setEnabled( true );
+				fieldAnnee.setEnabled( true );
+				fieldGenre.setEnabled( true );
 				btnRemplacer.setEnabled( true );
+				listeArtistes.setEnabled( true );
+				listeArtistes.setSelectedIndex( album.getIdArtiste() - 1 );
+			}
+		}else if(e.getSource() == listeArtistes) {
+			if(e.getClickCount() == 2) {
+				fieldArtiste.setText( listeArtistes.getSelectedValue().getNom());
 			}
 		}
 		
@@ -88,6 +99,9 @@ public class AlbumsMouseListener extends MouseAdapter {
 		btnAjouter.setEnabled( false );
 		btnRemplacer.setEnabled( false );
 		fieldTitre.setEnabled( false );
+		fieldAnnee.setEnabled( false );
+		fieldGenre.setEnabled( false );
+		listeArtistes.setEnabled( false );
 	}
 
 }

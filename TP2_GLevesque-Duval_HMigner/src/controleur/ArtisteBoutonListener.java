@@ -98,81 +98,81 @@ public class ArtisteBoutonListener implements ActionListener {
 				ControleConnexion.fermerConnexion();
 			}
 		} else if ( e.getSource() == btnNouveau ) {
-			if ( !fieldNom.isEnabled() ) {
-				toggleInfos();
-			}
-			fieldNom.setText( "" );
-			checkBoxMembre.setSelected( false );
+				btnModifier.setEnabled( false );
+				activerInfos();
+				clearInfos();
+				Image image = new ImageIcon( ArtisteBoutonListener.class.getResource( "../images/" + "default.png" ) ).getImage()
+						.getScaledInstance( 135, 119, Image.SCALE_SMOOTH );
+				lblImage.setIcon( new ImageIcon( image ) );
 			fieldNumero.setText( Integer.toString( modele.getRowCount() + 1 ) );
-			( (DefaultListModel<Album>) listeAlbums.getModel() ).removeAllElements();
-			lblImage.setIcon( null );
 			imageModifiee = false;
 			btnAjouter.setEnabled( true );
 			btnRemplacer.setEnabled( true );
 		} else if ( e.getSource() == btnAjouter ) {
 			Artiste artiste = new Artiste( Integer.parseInt( fieldNumero.getText() ), fieldNom.getText(),
 					checkBoxMembre.isSelected(), imageModifiee ? imageTemp : "default.png" );
-			if(modele.ajouterDonnee( artiste )) {
+			if ( modele.ajouterDonnee( artiste ) ) {
 				modele.fireTableDataChanged();
 				gestionnaire.ajouterArtiste( artiste );
-				activerBoutons();
-				toggleInfos();
+				desactiverBoutons();
+				desactiverInfos();
 				clearInfos();
-			}else {
-				JOptionPane.showMessageDialog(null, "Erreur, l'artiste " + fieldNom.getText() + " existe déjà",
-						"Message d'erreur", JOptionPane.ERROR_MESSAGE);
+			} else {
+				JOptionPane.showMessageDialog( null, "Erreur, l'artiste " + fieldNom.getText() + " existe déjà",
+						"Message d'erreur", JOptionPane.ERROR_MESSAGE );
 			}
-		} else if(e.getSource() == btnSupprimer) {
+		} else if ( e.getSource() == btnSupprimer ) {
 			int indice = table.getSelectedRow() + 1;
 			modele.supprimerArtiste( indice - 1 );
 			modele.fireTableDataChanged();
-			gestionnaire.supprimerArtiste(indice);
-			activerBoutons();
+			gestionnaire.supprimerArtiste( indice );
+			desactiverBoutons();
 			clearInfos();
-		} else if(e.getSource() == btnModifier) {
+		} else if ( e.getSource() == btnModifier ) {
 			int indice = table.getSelectedRow() + 1;
 			String nom = fieldNom.getText();
 			boolean membre = checkBoxMembre.isSelected();
 			String photo = imageModifiee ? imageTemp : (String) modele.getValueAt( indice - 1, 3 );
-			Artiste artiste = new Artiste(Integer.parseInt(fieldNumero.getText()), nom, membre, photo);
+			Artiste artiste = new Artiste( Integer.parseInt( fieldNumero.getText() ), nom, membre, photo );
 			modele.modifierArtiste( indice - 1, artiste );
 			modele.fireTableDataChanged();
 			gestionnaire.modifierArtiste( artiste, indice );
-			activerBoutons();
-			toggleInfos();
+			desactiverBoutons();
+			desactiverInfos();
 			clearInfos();
 		}
 
 	}
 
-	public void toggleInfos() {
-		if ( fieldNom.isEnabled() ) {
-			fieldNom.setEnabled( false );
-		} else if ( !fieldNom.isEnabled() ) {
-			fieldNom.setEnabled( true );
-		}
+	public void activerInfos() {
 
-		if ( checkBoxMembre.isEnabled() ) {
-			checkBoxMembre.setEnabled( false );
-		} else if ( !checkBoxMembre.isEnabled() ) {
-			checkBoxMembre.setEnabled( true );
-		}
+		fieldNom.setEnabled( true );
+
+		checkBoxMembre.setEnabled( true );
+
 		table.clearSelection();
 		btnSupprimer.setEnabled( false );
 	}
-	
-	public void activerBoutons() {
+
+	public void desactiverInfos() {
+		fieldNom.setEnabled( false );
+		checkBoxMembre.setEnabled( false );
+		table.clearSelection();
+		btnSupprimer.setEnabled( false );
+	}
+
+	public void desactiverBoutons() {
 		btnModifier.setEnabled( false );
 		btnSupprimer.setEnabled( false );
 		btnAjouter.setEnabled( false );
 		btnRemplacer.setEnabled( false );
 	}
-	
+
 	public void clearInfos() {
 		lblImage.setIcon( null );
 		fieldNumero.setText( "" );
 		fieldNom.setText( "" );
-		checkBoxMembre.setEnabled( false );
+		checkBoxMembre.setSelected( false );
 		( (DefaultListModel<Album>) listeAlbums.getModel() ).removeAllElements();
 		btnSupprimer.setEnabled( false );
 	}
