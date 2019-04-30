@@ -25,7 +25,7 @@ public class ArtisteListeListener implements ListSelectionListener {
 
 		if ( listeAlbums.getSelectedValue() != null ) {
 			Image image = new ImageIcon( ArtisteMouseListener.class
-					.getResource( "../images/" + listeAlbums.getSelectedValue().getCouverture() ) ).getImage()
+					.getResource( "../images/album/" + listeAlbums.getSelectedValue().getCouverture() ) ).getImage()
 							.getScaledInstance( 135, 119, Image.SCALE_SMOOTH );
 			lblImage.setIcon( new ImageIcon( image ) );
 		} else {

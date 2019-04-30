@@ -89,13 +89,13 @@ public class ArtisteBoutonListener implements ActionListener {
 
 		} else if ( e.getSource() == btnRemplacer ) {
 
-			JFileChooser choixFichier = new JFileChooser( System.getProperty( "user.dir" ) + "\\src\\images" );
+			JFileChooser choixFichier = new JFileChooser( System.getProperty( "user.dir" ) + "\\src\\images\\artiste" );
 
 			if ( choixFichier.showOpenDialog( null ) == JFileChooser.APPROVE_OPTION ) {
 				Image image;
 				File f = choixFichier.getSelectedFile();
 				imageTemp = f.getName();
-				image = new ImageIcon( ArtisteBoutonListener.class.getResource( "../images/" + imageTemp ) ).getImage()
+				image = new ImageIcon( ArtisteBoutonListener.class.getResource( "../images/artiste/" + imageTemp ) ).getImage()
 						.getScaledInstance( 135, 119, Image.SCALE_SMOOTH );
 				lblImage.setIcon( new ImageIcon( image ) );
 				imageModifiee = true;
@@ -117,7 +117,7 @@ public class ArtisteBoutonListener implements ActionListener {
 			btnModifier.setEnabled( false );
 			activerInfos();
 			clearInfos();
-			Image image = new ImageIcon( ArtisteBoutonListener.class.getResource( "../images/" + "default.png" ) )
+			Image image = new ImageIcon( ArtisteBoutonListener.class.getResource( "../images/artiste/" + "default.png" ) )
 					.getImage().getScaledInstance( 135, 119, Image.SCALE_SMOOTH );
 			lblImage.setIcon( new ImageIcon( image ) );
 			fieldNumero.setText( Integer.toString( (int) modele.getValueAt( modele.getRowCount() - 1, 0 ) + 1 ) );

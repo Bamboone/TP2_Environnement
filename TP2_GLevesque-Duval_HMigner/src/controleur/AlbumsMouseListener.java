@@ -67,10 +67,10 @@ public class AlbumsMouseListener extends MouseAdapter {
 
 			Image image;
 			try {
-				image = new ImageIcon( ArtisteMouseListener.class.getResource( "../images/" + album.getCouverture() ) )
+				image = new ImageIcon( ArtisteMouseListener.class.getResource( "../images/album/" + album.getCouverture() ) )
 						.getImage().getScaledInstance( 135, 119, Image.SCALE_SMOOTH );
 			} catch ( Exception e2 ) {
-				image = new ImageIcon( ArtisteBoutonListener.class.getResource( "../images/default.png" ) ).getImage()
+				image = new ImageIcon( ArtisteBoutonListener.class.getResource( "../images/album/default.png" ) ).getImage()
 						.getScaledInstance( 135, 119, Image.SCALE_SMOOTH );
 			}
 			lblImage.setIcon( new ImageIcon( image ) );

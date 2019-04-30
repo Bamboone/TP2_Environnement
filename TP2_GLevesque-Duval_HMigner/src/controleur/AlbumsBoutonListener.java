@@ -87,12 +87,12 @@ public class AlbumsBoutonListener implements ActionListener {
 				clearInfos();
 			}
 		} else if ( e.getSource() == btnRemplacer ) {
-			JFileChooser choixFichier = new JFileChooser( System.getProperty( "user.dir" ) + "\\src\\images" );
+			JFileChooser choixFichier = new JFileChooser( System.getProperty( "user.dir" ) + "\\src\\images\\album" );
 			if ( choixFichier.showOpenDialog( null ) == JFileChooser.APPROVE_OPTION ) {
 				Image image;
 				File f = choixFichier.getSelectedFile();
 				imageTemp = f.getName();
-				image = new ImageIcon( ArtisteBoutonListener.class.getResource( "../images/" + imageTemp ) ).getImage()
+				image = new ImageIcon( ArtisteBoutonListener.class.getResource( "../images/album/" + imageTemp ) ).getImage()
 						.getScaledInstance( 135, 119, Image.SCALE_SMOOTH );
 				lblImage.setIcon( new ImageIcon( image ) );
 				imageModifiee = true;
@@ -113,7 +113,7 @@ public class AlbumsBoutonListener implements ActionListener {
 
 			clearInfos();
 			fieldNumero.setText( Integer.toString( (int) modele.getValueAt( modele.getRowCount() - 1, 0 ) + 1 ) );
-			Image image = new ImageIcon( ArtisteBoutonListener.class.getResource( "../images/" + "default.png" ) )
+			Image image = new ImageIcon( ArtisteBoutonListener.class.getResource( "../images/album/" + "default.png" ) )
 					.getImage().getScaledInstance( 135, 119, Image.SCALE_SMOOTH );
 			lblImage.setIcon( new ImageIcon( image ) );
 			imageModifiee = false;
