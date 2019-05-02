@@ -1,2 +1,2 @@
-Nom d'utilisateur : admin
+Nom d'utilisateur : administrateur
 Mot de passe : 12345

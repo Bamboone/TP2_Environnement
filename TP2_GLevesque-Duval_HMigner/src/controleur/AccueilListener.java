@@ -42,7 +42,7 @@ public class AccueilListener extends WindowAdapter implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == valider) {
-			if (nomUtilisateur.getText().equals("admin")
+			if (nomUtilisateur.getText().equals("administrateur")
 					&& String.valueOf(mdp.getPassword()).equals("12345")) {
 				VueChoixTraitements fenChoix = new VueChoixTraitements();
 				fenetre.dispose();
